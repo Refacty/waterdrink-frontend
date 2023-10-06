@@ -1,8 +1,14 @@
-import React from "react"
-import { Text } from "react-native"
+import React from 'react';
+import { SafeAreaView, Text } from 'react-native';
+import ScreenStyle from './Styles/ScreenStyle'
 
-function App(){
-    return <Text>Lorenzo ipsom</Text>
+
+const Formulario = () => {
+  return (
+    <SafeAreaView>
+      <Text style={ScreenStyle.estilo}>Hello, Worsssld! lorem ipsum</Text>
+    </SafeAreaView>
+  );
 }
 
-export default App
+export default Formulario;
