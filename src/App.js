@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, ScrollView, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, Image, ScrollView, TextInput, Button, StyleSheet, SafeAreaView } from 'react-native';
 import logo from './images/logo.jpg'
 import CustomButton from './BtnPersonalizado';
 import CustomInput from './TextBoxPersonalizado';
@@ -18,7 +18,7 @@ const App = () => {
 
  
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginBottom: 130 }}>
+    <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginBottom: 130 }}>
       <Text style={{fontSize:50, fontFamily:'Lato_900Black', color:'#67a4f5'}}>Registrar-se</Text>
       
       <Image source={logo} style={{ width: 165, height: 165 }} />
@@ -31,7 +31,7 @@ const App = () => {
       
       <CustomButton title={'Registrar'} />
 
-    </View>
+    </SafeAreaView>
   );
 };
 export default App;
