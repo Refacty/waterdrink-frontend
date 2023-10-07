@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Image, ScrollView, TextInput, Button, StyleSheet, SafeAreaView } from 'react-native';
-import logo from './images/logo.jpg'
-import CustomButton from './src/BtnPersonalizado';
-import CustomInput from './src/TextBoxPersonalizado';
+import CustomButton from '../../components/BtnPersonalizado';
+import CustomInput from '../../components/TextBoxPersonalizado';
 import { Lato_900Black, Lato_100Thin, useFonts } from '@expo-google-fonts/lato';
 
 const App = () => {
@@ -19,9 +18,7 @@ const App = () => {
  
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginBottom: 130 }}>
-      <Text style={{fontSize:50, fontFamily:'Lato_900Black', color:'#67a4f5'}}>Registrar-se</Text>
-      
-      <Image source={logo} style={{ width: 165, height: 165 }} />
+      <Text style={{fontSize:50, fontFamily:'Lato_900Black', color:'#67a4f5', marginBottom:20}}>Registrar-se</Text>
       
       <CustomInput placeholder={'Email'}></CustomInput>
       
