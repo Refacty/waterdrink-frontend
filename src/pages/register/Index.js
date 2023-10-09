@@ -4,6 +4,12 @@ import CustomButton from '../../components/BtnPersonalizado';
 import CustomInput from '../../components/TextBoxPersonalizado';
 import { Lato_900Black, Lato_100Thin, useFonts } from '@expo-google-fonts/lato';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import axios from 'axios';
+
+
+
+
+
 
 const App = () => {
 
