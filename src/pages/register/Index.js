@@ -42,10 +42,15 @@ const App = () => {
     "name": nome,
     "email": email,
     "password": senha,
-    "weight": "",
-    "birthday": "",
-    "profession": ""
-  };
+    "weight": null,
+    "birthday": null,
+    "profession": null,
+    "progress": {
+      "progress_id": 1,
+      "weeklyProgress": 1,
+      "dailyProgress": 0.0
+    }
+  }
  
   //Função assincrona que envia os dados de cadastro para API no back-end.
   const postData = async () => {
@@ -66,10 +71,10 @@ const App = () => {
   
     if (senha === rsenha) {
       try {
-        const response = await axios.post('localhost:8080/tb_user/', userData);
-        Alert.alert('Resposta:', response.data);
+        const response = await axios.post('http://10.0.0.119:8080/tb_user', userData);
+        Alert.alert('Resposta:', JSON.stringify(response.data));
       } catch (error) {
-        Alert.alert('Erro ao enviar:', JSON.stringify(userData));
+        Alert.alert(JSON.stringify(error));
       }
     } else {
       Alert.alert('Senhas não coincidem.');
@@ -90,6 +95,7 @@ const App = () => {
       <View style={{ width: '100%', alignItems: 'center', paddingTop: 70 }}>
         <CustomInput placeholder={'Nome completo'} onChangeText={handlerNome} value={nome}></CustomInput>
         <CustomInput placeholder={'Email'} onChangeText={handlerEmail} value={email}></CustomInput>
+
         <CustomInputPass placeholder={'Senha'} onChangeText={handlerSenha} value={senha}></CustomInputPass>
         <CustomInputPass placeholder={'Repita sua senha'} onChangeText={handlerRsenha} value={rsenha}></CustomInputPass>
         

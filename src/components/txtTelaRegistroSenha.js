@@ -1,39 +1,37 @@
 import React, { useState } from 'react';
-import { StyleSheet, TextInput } from 'react-native';
+import { StyleSheet, TextInput, View } from 'react-native';
 import { Lato_900Black, Lato_100Thin, useFonts } from '@expo-google-fonts/lato';
+import BouncyCheckbox from "react-native-bouncy-checkbox";
+import { Entypo } from '@expo/vector-icons'; 
 
-const CustomInputPass = ({ placeholder, Value, onChangeText }) => {
-  const [isShort, setIsShort] = useState(false);
+const CustomInputPass = ({ placeholder, Value, onChangeText, pStyle }) => {
+  const [passwordVisible, setPasswordVisible] = useState(true);
 
-  const handleInputPass = (text) => {
-    setIsShort(text.length < 5 && text !== "");
-  };
-
-  const inputStyle = isShort ? InputEs.istoShort : InputEs.isNormal;
-
-  const [fontLoaded] = useFonts({
-    Lato_100Thin,
-    Lato_900Black
-  });
-
-  if (!fontLoaded) {
-    return null;
+  const togglePasswordView = () => {
+    setPasswordVisible(!passwordVisible);
   }
 
   return (
-    <TextInput
-      style={[InputEs.estilo, inputStyle]}
-      placeholder={placeholder}
-      onChangeText={(text) => {
-        onChangeText(text);
-        handleInputPass(text);
-      }}
-      value={Value}
-    />
+    <View style={InputStyle.mostrarSenha}>
+      <TextInput
+        style={[InputStyle.estilo, pStyle]}
+        placeholder={placeholder}
+        onChangeText={onChangeText}
+        value={Value}
+        secureTextEntry={!passwordVisible}
+      />
+      <Entypo
+        name={passwordVisible ? "eye" : "eye-with-line"}
+        size={26}
+        color="#67a4f5"
+        onPress={togglePasswordView}
+        style={{ right: 45, marginTop: 13 }}
+      />
+    </View>
   );
 };
 
-const InputEs = StyleSheet.create({
+const InputStyle = StyleSheet.create({
   estilo: {
     paddingLeft: 10,
     backgroundColor: 'white',
@@ -52,14 +50,12 @@ const InputEs = StyleSheet.create({
     shadowRadius: 5,
     elevation: 7
   },
-  istoShort: {
-    color: 'red',
-    borderWidth: 0.3,
-    borderColor: 'red'
+  mostrarSenha: {
+    width: '100%',
+    left: 33,
+    display: 'flex',
+    flexDirection: 'row'
   },
-  isNormal: {
-    color: 'black'
-  }
 });
 
 export default CustomInputPass;
