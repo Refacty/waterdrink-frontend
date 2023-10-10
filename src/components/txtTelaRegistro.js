@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { Lato_900Black, Lato_100Thin, useFonts } from '@expo-google-fonts/lato';
 
-const CustomInput = ({ placeholder }) => {
-  const [inputValue, setInputValue] = useState('');
+const CustomInput = ({ placeholder, Value, onChangeText  }) => {
   const [isShort, setIsShort] = useState(false);
   const handleInput = (text) => {
     setInputValue(text);
@@ -24,8 +23,8 @@ const CustomInput = ({ placeholder }) => {
     <TextInput
       style={[InputEs.estilo, inputStyle]}
       placeholder={placeholder}
-      onChangeText={handleInput}
-      value={inputValue}
+      onChangeText={onChangeText}
+      value={Value}
     />
   );
 };
