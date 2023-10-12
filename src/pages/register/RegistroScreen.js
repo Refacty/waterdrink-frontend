@@ -71,7 +71,7 @@ const App = () => {
   
     if (senha === rsenha) {
       try {
-        const response = await axios.post('http://10.0.0.119:8080/tb_user', userData);
+        const response = await axios.post('http://refacty.com:8080/tb_user', userData);
         Alert.alert('Resposta:', JSON.stringify(response.data));
       } catch (error) {
         Alert.alert(JSON.stringify(error));
