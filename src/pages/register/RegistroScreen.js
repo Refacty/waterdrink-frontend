@@ -86,7 +86,7 @@ const App = ({navigation}) => {
   if (!fontLoaded) {
     return null;
   }
-  const logo = require('../../images/logo.jpg');
+  const logo = require('../../images/logo.png');
 
   //Retorna os elementos da tela.
   return (
