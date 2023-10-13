@@ -70,9 +70,9 @@ const App = ({navigation}) => {
     }
   
     if (senha === rsenha) {
-      navigation.navigate('Home');
       try {
         await axios.post('http://refacty.com:8080/tb_user', userData);
+        navigation.navigate('Home');
       } catch (error) {
         Alert.alert(JSON.stringify(error));
       }
@@ -90,8 +90,8 @@ const App = ({navigation}) => {
 
   //Retorna os elementos da tela.
   return (
-    <SafeAreaView className="bg-blue-100 h-full">
-      <View className="w-4/5 items-center m-auto">
+    <SafeAreaView className="bg-blue-100">
+      <View className="w-4/5 flex justify-center items-center m-auto h-full">
         <Image source={logo} className="w-28 h-28"/>
           
         <Text className="text-5xl text-blue-400 font-lato-900">Registrar-se</Text>
