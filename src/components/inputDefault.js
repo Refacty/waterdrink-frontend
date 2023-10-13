@@ -21,7 +21,8 @@ const CustomInput = ({ placeholder, Value, onChangeText  }) => {
 
   return (
     <TextInput
-      style={[InputEs.estilo, inputStyle]}
+      style={[inputStyle]}
+      className="pl-3 bg-white w-full rounded-2xl mb-5 shadow-sm text-black h-12 font-lato-900"
       placeholder={placeholder}
       onChangeText={onChangeText}
       value={Value}
@@ -30,24 +31,6 @@ const CustomInput = ({ placeholder, Value, onChangeText  }) => {
 };
 
 const InputEs = StyleSheet.create({
-  estilo: {
-    paddingLeft: 10,
-    backgroundColor: 'white',
-    width: '83%',
-    borderRadius: 17,
-    marginBottom: 20,
-    shadowColor: 'blue',
-    color: 'black',
-    height:50,
-    fontFamily:'Lato_900Black',
-    shadowOffset: {
-        width: 20,
-        height: 0,
-      },
-      shadowOpacity: 1,
-      shadowRadius: 5,
-      elevation: 7,
-  },
   istoShort: {
     color: 'red',
     borderWidth: 0.3,

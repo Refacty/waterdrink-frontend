@@ -12,9 +12,10 @@ const CustomInputPass = ({ placeholder, Value, onChangeText, pStyle }) => {
   }
 
   return (
-    <View style={InputStyle.mostrarSenha}>
+    <View style={InputStyle.mostrarSenha} className="relative w-full flex flex-row justify-center">
       <TextInput
-        style={[InputStyle.estilo, pStyle]}
+        style={[pStyle]}
+        className="pl-3 bg-white w-full rounded-2xl mb-5 shadow-sm text-black h-12 font-lato-900"
         placeholder={placeholder}
         onChangeText={onChangeText}
         value={Value}
@@ -25,36 +26,17 @@ const CustomInputPass = ({ placeholder, Value, onChangeText, pStyle }) => {
         size={26}
         color="#67a4f5"
         onPress={togglePasswordView}
-        style={{ right: 45, marginTop: 13 }}
+        style={InputStyle.iconView}
       />
     </View>
   );
 };
 
 const InputStyle = StyleSheet.create({
-  estilo: {
-    paddingLeft: 10,
-    backgroundColor: 'white',
-    width: '83%',
-    borderRadius: 17,
-    marginBottom: 20,
-    shadowColor: 'blue',
-    color: 'black',
-    height: 50,
-    fontFamily: 'Lato_900Black',
-    shadowOffset: {
-      width: 20,
-      height: 0,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 5,
-    elevation: 7
-  },
-  mostrarSenha: {
-    width: '100%',
-    left: 33,
-    display: 'flex',
-    flexDirection: 'row'
+  iconView: {
+    position: 'absolute',
+    top: 12,
+    right: 16,
   },
 });
 

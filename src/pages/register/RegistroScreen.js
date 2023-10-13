@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Text, SafeAreaView, View, Alert } from 'react-native';
-import CustomButton from '../../components/btnTelaRegistro';
-import CustomInput from '../../components/txtTelaRegistro';
-import CustomInputPass from '../../components/txtTelaRegistroSenha';
+import { Text, SafeAreaView, View, Alert, Image } from 'react-native';
+import CustomButton from '../../components/btnDefault';
+import CustomInput from '../../components/inputDefault';
+import CustomInputPass from '../../components/inputPassword';
 import { Lato_900Black, Lato_100Thin, useFonts } from '@expo-google-fonts/lato';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import axios from 'axios';
@@ -86,27 +86,40 @@ const App = () => {
   if (!fontLoaded) {
     return null;
   }
+  const logo = require('../../images/logo.jpg');
 
   //Retorna os elementos da tela.
   return (
-    <SafeAreaView style={{ flex: 1, justifyContent: 'top', alignItems: 'center', backgroundColor: '#e3f6fc', marginTop: 30 }}>
-      <Text style={{ fontSize: 60, fontFamily: 'Lato_900Black', color: '#67a4f5', marginBottom: 20, marginTop: 50 }}>Registrar-se</Text>
+    <SafeAreaView className="bg-blue-100 h-full" >
+      <View className="w-4/5 items-center m-auto">
+        <Image source={logo} className="w-28 h-28"/>
+          
+        <Text className="text-5xl text-blue-400 font-lato-900">Registrar-se</Text>
 
-      <View style={{ width: '100%', alignItems: 'center', paddingTop: 70 }}>
-        <CustomInput placeholder={'Nome completo'} onChangeText={handlerNome} value={nome}></CustomInput>
-        <CustomInput placeholder={'Email'} onChangeText={handlerEmail} value={email}></CustomInput>
+        <View className="w-full mt-5">
+          <CustomInput placeholder={'Nome completo'} onChangeText={handlerNome} value={nome}></CustomInput>
+          <CustomInput placeholder={'Email'} onChangeText={handlerEmail} value={email}></CustomInput>
 
-        <CustomInputPass placeholder={'Senha'} onChangeText={handlerSenha} value={senha}></CustomInputPass>
-        <CustomInputPass placeholder={'Repita sua senha'} onChangeText={handlerRsenha} value={rsenha}></CustomInputPass>
-        
-        <View style={{ width: '100%', flexDirection: 'row' }}>
-          <BouncyCheckbox style={{marginLeft: 40}} iconStyle={{ borderColor: "blue" }} fillColor="#67a4f5"></BouncyCheckbox>
-          <Text style={{ fontFamily: 'Lato_900Black', color: '#67a4f5', marginTop: 2.5, right:10}}>Lembrar senha</Text>
+          <CustomInputPass placeholder={'Senha'} onChangeText={handlerSenha} value={senha}></CustomInputPass>
+          <CustomInputPass placeholder={'Repita sua senha'} onChangeText={handlerRsenha} value={rsenha}></CustomInputPass>
+          
+          <View className="w-full flex flex-row items-center">
+            <BouncyCheckbox 
+              iconStyle={{ borderColor: "blue" }} 
+              fillColor="#67a4f5" 
+              text='Lembrar senha'
+              textStyle={{
+                textDecorationLine: "none",
+                color: '#67a4f5',
+                fontFamily: 'Lato_900Black',
+              }}
+            />
+          </View>
         </View>
-      </View>
 
-      <View style={{ marginTop: 165, width: '100%', alignItems: 'center' }}>
-        <CustomButton title={'Registrar-se'} onPress={() => postData()} />
+        <View className="m-auto text-center w-full mt-3">
+          <CustomButton title={'Registrar-se'} onPress={() => postData()} />
+        </View>
       </View>
     </SafeAreaView>
   );
