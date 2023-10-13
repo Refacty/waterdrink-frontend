@@ -8,7 +8,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import axios from 'axios';
 
 // funçãoo 'Main'
-const App = () => {
+const App = ({navigation}) => { 
   
   // Carregar as fonts
   const [fontLoaded] = useFonts({
@@ -70,9 +70,9 @@ const App = () => {
     }
   
     if (senha === rsenha) {
+      navigation.navigate('Home');
       try {
-        const response = await axios.post('http://refacty.com:8080/tb_user', userData);
-        Alert.alert('Resposta:', JSON.stringify(response.data));
+        await axios.post('http://refacty.com:8080/tb_user', userData);
       } catch (error) {
         Alert.alert(JSON.stringify(error));
       }
@@ -90,7 +90,7 @@ const App = () => {
 
   //Retorna os elementos da tela.
   return (
-    <SafeAreaView className="bg-blue-100 h-full" >
+    <SafeAreaView className="bg-blue-100 h-full">
       <View className="w-4/5 items-center m-auto">
         <Image source={logo} className="w-28 h-28"/>
           

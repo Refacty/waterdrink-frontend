@@ -15,7 +15,7 @@ const CustomInputPass = ({ placeholder, Value, onChangeText, pStyle }) => {
     <View style={InputStyle.mostrarSenha} className="relative w-full flex flex-row justify-center">
       <TextInput
         style={[pStyle]}
-        className="pl-3 bg-white w-full rounded-2xl mb-5 shadow-sm text-black h-12 font-lato-900"
+        className="pl-3 bg-white w-full rounded-20 mb-5 shadow-sm text-black h-12 font-lato-900"
         placeholder={placeholder}
         onChangeText={onChangeText}
         value={Value}
