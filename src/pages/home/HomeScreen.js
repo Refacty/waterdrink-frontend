@@ -21,7 +21,6 @@ export default function Home() {
         justifyContent:'top',
         padding:70,
         width:'100%'
-        
     }
 })
 
@@ -45,7 +44,7 @@ export default function Home() {
             <View className="bg-slate-300" style={{borderRadius:20, width:'132%', height:'25%'}}>
             <Text style={{textAlign:'center', fontSize:15, marginTop:10, fontFamily:'Lato_900Black', color:'#687cc6', fontSize:20}}>Você Sabia?</Text>
             <Image source={require('../../images/bixinho.png')} style={{width:240, height:undefined, aspectRatio:1, right:80, bottom:65}} />
-            <Text style={{bottom:'158%', fontSize:13.5, textAlign:'left', width:'60%', left:'35%', fontFamily:'Lato_900Black', color:'#687cc6' }}>O cálculo recomendado pelos especialistas é ingerir 35ml de água por cada quilo. Assim, a quantidade de água ingerida se aproxima mais da sua necessidade individual.</Text>
+            <Text style={{bottom:'154%', fontSize:13.5, textAlign:'left', width:'60%', left:'35%', fontFamily:'Lato_900Black', color:'#687cc6' }}>O cálculo recomendado pelos especialistas é ingerir 35ml de água por cada quilo. Assim, a quantidade de água ingerida se aproxima mais da sua necessidade individual.</Text>
             </View>
            
         </SafeAreaView>
