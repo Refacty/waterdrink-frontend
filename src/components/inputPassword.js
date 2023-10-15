@@ -24,7 +24,7 @@ const CustomInputPass = ({ placeholder, Value, onChangeText, pStyle }) => {
       <Entypo
         name={passwordVisible ? "eye" : "eye-with-line"}
         size={26}
-        color="#67a4f5"
+        color="#007784"
         onPress={togglePasswordView}
         style={InputStyle.iconView}
       />

@@ -13,7 +13,7 @@ const CustomButton = ({ title, onPress }) => {
   }
 
   return (
-    <TouchableOpacity className="bg-blue-400 p-4 rounded-35 items-center justify-center w-full h-17" onPress={onPress} activeOpacity={0.6}>
+    <TouchableOpacity className="p-4 rounded-35 items-center justify-center w-full h-17" onPress={onPress} style={{backgroundColor:"#007784"}} activeOpacity={0.6}>
       <Text className="font-lato-900 text-white text-3xl">{title}</Text>
     </TouchableOpacity>
   );

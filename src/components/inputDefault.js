@@ -21,8 +21,8 @@ const CustomInput = ({ placeholder, Value, onChangeText  }) => {
 
   return (
     <TextInput
-      style={[inputStyle]}
-      className="pl-3 bg-white w-full rounded-20 mb-5 shadow-sm text-black h-12 font-lato-900"
+      style={[inputStyle, InputEs.shadow]}
+      className="pl-3 bg-white w-full rounded-20 mb-5 text-black h-12 font-lato-900"
       placeholder={placeholder}
       onChangeText={onChangeText}
       value={Value}

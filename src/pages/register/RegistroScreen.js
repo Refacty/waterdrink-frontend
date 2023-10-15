@@ -72,7 +72,7 @@ const App = ({navigation}) => {
     if (senha === rsenha) {
       try {
         await axios.post('http://refacty.com:8080/tb_user', userData);
-        navigation.navigate('Home');
+        navigation.navigate("MainStack")
       } catch (error) {
         Alert.alert(JSON.stringify(error));
       }
@@ -86,15 +86,15 @@ const App = ({navigation}) => {
   if (!fontLoaded) {
     return null;
   }
-  const logo = require('../../images/logo.png');
+  const logo = require('../../images/waterdrink.png');
 
   //Retorna os elementos da tela.
   return (
-    <SafeAreaView className="bg-blue-100">
-      <View className="w-4/5 flex justify-center items-center m-auto h-full">
+    <SafeAreaView style={{backgroundColor:"#E6FCFF"}}>
+      <View className="w-4/5 flex justify-center items-center m-auto h-full pt-10">
         <Image source={logo} className="w-28 h-28"/>
           
-        <Text className="text-5xl text-blue-400 font-lato-900">Registrar-se</Text>
+        <Text className="text-5xl text-blue-400 font-lato-900" style={{color:"#007784"}}>Registrar-se</Text>
 
         <View className="w-full mt-5">
           <CustomInput placeholder={'Nome completo'} onChangeText={handlerNome} value={nome}></CustomInput>
@@ -106,11 +106,11 @@ const App = ({navigation}) => {
           <View className="w-full flex flex-row items-center">
             <BouncyCheckbox 
               iconStyle={{ borderColor: "blue" }} 
-              fillColor="#67a4f5" 
+              fillColor="#007784" 
               text='Lembrar senha'
               textStyle={{
                 textDecorationLine: "none",
-                color: '#67a4f5',
+                color: '#007784',
                 fontFamily: 'Lato_900Black',
               }}
             />
