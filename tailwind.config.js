@@ -15,7 +15,10 @@ module.exports = {
       '25': 25,
       '30': 30,
       '35': 35,
-    }
+    },
+    colors:{
+      'default':'#007784'
+    },
   },
   plugins: [],
 }
