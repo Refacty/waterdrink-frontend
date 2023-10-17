@@ -94,6 +94,7 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="RegistroScreen">
+        <Stack.Screen name="RegistroScreen" component={RegistroScreen} options={{ headerShown: false }} />
         <Stack.Screen name="MainStack" component={MainStack} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>

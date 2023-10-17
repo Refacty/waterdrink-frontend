@@ -5,6 +5,7 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import Modal from "react-native-modal";
 import WaveBorder from "../../components/WaveBorder"
 import { Ionicons } from '@expo/vector-icons';
+import axios from 'axios';
 
 
 export default function Home({ route }) {
@@ -42,7 +43,6 @@ export default function Home({ route }) {
   })
 
   return (
-
     <SafeAreaView style={Estilo.container}>
       <Text className="text-lg font-lato-900 text-default">Você bebeu 20 Litros de água.</Text>
       <AnimatedCircularProgress
@@ -97,7 +97,6 @@ export default function Home({ route }) {
               />
               <Text style={{ fontSize: 12, fontFamily: 'Lato_900Black', color: '#007784', paddingTop: 5 }}>1L</Text>
             </TouchableOpacity>
-
           </View>
         </View>
       </Modal>
