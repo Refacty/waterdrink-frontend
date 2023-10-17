@@ -6,14 +6,10 @@ import Modal from "react-native-modal";
 import WaveBorder from "../../components/WaveBorder"
 import { Ionicons } from '@expo/vector-icons';
 
+
 export default function Home({ route }) {
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const toggleModalVisible = () => {
-    setIsModalVisible(!isModalVisible)
-  }
-
+  const isModalVisible = route.params ? route.params.isModalVisible : false;
 
   const [fontLoaded] = useFonts({
     Lato_100Thin,
@@ -113,13 +109,6 @@ export default function Home({ route }) {
         <Image source={require('../../images/bixinho.png')} style={{ width: 240, height: undefined, aspectRatio: 1, right: 80, bottom: 65 }} />
         <Text style={{ bottom: '145%', fontSize: 13.5, textAlign: 'left', width: '60%', left: '35%', fontFamily: 'Lato_900Black', color: '#007784' }}>O cálculo recomendado pelos especialistas é ingerir 35ml de água por cada quilo. Assim, a quantidade de água ingerida se aproxima mais da sua necessidade individual.</Text>
       </View>
-
-      <TouchableOpacity onPress={toggleModalVisible} style={{height:100, width:100, backgroundColor:"#007784", marginTop:750, borderRadius:200, alignItems:"center", position:"absolute"}}>
-      <Ionicons name="water" size={45} color="white" style={{marginTop:20, marginLeft:5}} />
-      </TouchableOpacity>  
-        
-        
-        
     </SafeAreaView>
   );
 }
