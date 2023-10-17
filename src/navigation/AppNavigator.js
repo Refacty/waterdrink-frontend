@@ -7,7 +7,7 @@ import HomeScreen from '../../src/pages/home/HomeScreen';
 import Profile from '../pages/profile/Profile';
 import { useNavigation } from '@react-navigation/native';
 import RegistroScreen from '../../src/pages/register/RegistroScreen';
-import { View } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { FOCUS } from 'nativewind/dist/utils/selector';
 
 const Tab = createBottomTabNavigator();
@@ -21,6 +21,10 @@ const MainStack = () => {
     return setModalVisible(!isModalVisible);
   };
 
+  const handleModalPress = () => {
+    toggleModal(); // Chama a função para alternar o modal
+    navigation.navigate('HomeScreen', { isModalVisible: !isModalVisible });
+  };
   return (
     <Tab.Navigator
       initialRouteName="HomeScreen"
@@ -62,7 +66,13 @@ const MainStack = () => {
         }}
         options={{
           tabBarIcon: ({ color, size, focused }) => {
-            return focused ? <Ionicons name="water" size={30} color="white" /> : <Ionicons name="water-outline" size={30} color="white" />;
+            return (
+              <View style={{borderRadius:200, height:100, width:100, bottom:30,borderColor:"white", backgroundColor:"white", alignItems:"center"}}>
+              <TouchableOpacity onPress={handleModalPress} activeOpacity={0.6} style={{backgroundColor:"#007784" , borderRadius:100, height:80, width:80, top:10, alignItems:"center"}}>
+              <Ionicons name="water" size={45} color="white" style={{marginTop:15}} />
+              </TouchableOpacity>
+              </View>
+              )
           },
         }}
       />
