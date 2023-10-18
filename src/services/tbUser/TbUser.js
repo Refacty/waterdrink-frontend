@@ -1,4 +1,4 @@
-import db from "./SQLiteDatabse";
+import db from "../sqlLite/DbManager";
 
 /**
  * INICIALIZAÇÃO DA TABELA
@@ -6,11 +6,11 @@ import db from "./SQLiteDatabse";
  */
 db.transaction((tx) => {
   //<<<<<<<<<<<<<<<<<<<<<<<< USE ISSO APENAS DURANTE OS TESTES!!! >>>>>>>>>>>>>>>>>>>>>>>
-  //tx.executeSql("DROP TABLE cars;");
+  tx.executeSql("DROP TABLE tb_user;")
   //<<<<<<<<<<<<<<<<<<<<<<<< USE ISSO APENAS DURANTE OS TESTES!!! >>>>>>>>>>>>>>>>>>>>>>>
 
   tx.executeSql(
-    "CREATE TABLE IF NOT EXISTS cars (user_id INTEGER PRIMARY KEY, birthday DATE, daily_progress FLOAT, profession VARCHAR(255), weekly_progress FLOAT, weight FLOAT, session VARCHAR(255));"
+    "CREATE TABLE IF NOT EXISTS tb_user (user_id INTEGER PRIMARY KEY, user_name VARCHAR(255), user_email VARCHAR(255), user_session VARCHAR(255), user_birthday DATE, user_daily_progress FLOAT, user_profession VARCHAR(255), user_weekly_progress FLOAT, user_weight FLOAT);"
   );
 });
 
@@ -21,13 +21,13 @@ db.transaction((tx) => {
  *  - O resultado da Promise é o ID do registro (criado por AUTOINCREMENT)
  *  - Pode retornar erro (reject) caso exista erro no SQL ou nos parâmetros.
  */
-const create = (obj) => {
+const create_user = (obj) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       //comando SQL modificável
       tx.executeSql(
-        "INSERT INTO cars (user_id, email, birthday, daily_progress, profession, weekly_progress, weight, session) values (? ,? ,? ,? ,? ,? ,?);",
-        [obj.brand, obj.model, obj.hp],
+        "INSERT INTO tb_user (user_id, user_name, user_email, user_birthday, user_daily_progress, user_profession, user_weekly_progress, user_weight, user_session) values (? ,? ,? ,? ,? ,? ,?, ?, ?);",
+        [obj.user_id, obj.user_name, obj.user_email, obj.user_birthday, obj.user_daily_progress, obj.user_profession, obj.user_weekly_progress, obj.user_weight, obj.user_session],
         //-----------------------
         (_, { rowsAffected, insertId }) => {
           if (rowsAffected > 0) resolve(insertId);
@@ -46,19 +46,22 @@ const create = (obj) => {
  *  - O resultado da Promise é a quantidade de registros atualizados;
  *  - Pode retornar erro (reject) caso o ID não exista ou então caso ocorra erro no SQL.
  */
-const update = (id, obj) => {
+const update_progress = (obj) => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       //comando SQL modificável
       tx.executeSql(
-        "UPDATE cars SET brand=?, model=?, hp=? WHERE id=?;",
-        [obj.brand, obj.model, obj.hp, id],
+        "UPDATE user_daily_progress SET user_daily_progress = user_daily_progress + ?, user_weekly_progress + ?;",
+        [obj.ml, obj.ml],
         //-----------------------
         (_, { rowsAffected }) => {
           if (rowsAffected > 0) resolve(rowsAffected);
-          else reject("Error updating obj: id=" + id); // nenhum registro alterado
+          else reject("Error updating obj"); // nenhum registro alterado
         },
-        (_, error) => reject(error) // erro interno em tx.executeSql
+        (_, error) => {
+          console.error('Error executing SQL:', error);
+          reject(error)
+        } // erro interno em tx.executeSql
       );
     });
   });
@@ -71,66 +74,12 @@ const update = (id, obj) => {
  *  - O resultado da Promise é o objeto (caso exista);
  *  - Pode retornar erro (reject) caso o ID não exista ou então caso ocorra erro no SQL.
  */
-const find = (id) => {
+const findAll = () => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
-      //comando SQL modificável
       tx.executeSql(
-        "SELECT * FROM cars WHERE id=?;",
-        [id],
-        //-----------------------
-        (_, { rows }) => {
-          if (rows.length > 0) resolve(rows._array[0]);
-          else reject("Obj not found: id=" + id); // nenhum registro encontrado
-        },
-        (_, error) => reject(error) // erro interno em tx.executeSql
-      );
-    });
-  });
-};
-
-/**
- * BUSCA UM REGISTRO POR MEIO DA MARCA (brand)
- * - Recebe a marca do carro;
- * - Retorna uma Promise:
- *  - O resultado da Promise é um array com os objetos encontrados;
- *  - Pode retornar erro (reject) caso o ID não exista ou então caso ocorra erro no SQL;
- *  - Pode retornar um array vazio caso nenhum objeto seja encontrado.
- */
-const findByBrand = (brand) => {
-  return new Promise((resolve, reject) => {
-    db.transaction((tx) => {
-      //comando SQL modificável
-      tx.executeSql(
-        "SELECT * FROM cars WHERE brand LIKE ?;",
-        [brand],
-        //-----------------------
-        (_, { rows }) => {
-          if (rows.length > 0) resolve(rows._array);
-          else reject("Obj not found: brand=" + brand); // nenhum registro encontrado
-        },
-        (_, error) => reject(error) // erro interno em tx.executeSql
-      );
-    });
-  });
-};
-
-/**
- * BUSCA TODOS OS REGISTROS DE UMA DETERMINADA TABELA
- * - Não recebe parâmetros;
- * - Retorna uma Promise:
- *  - O resultado da Promise é uma lista (Array) de objetos;
- *  - Pode retornar erro (reject) caso o ID não exista ou então caso ocorra erro no SQL;
- *  - Pode retornar um array vazio caso não existam registros.
- */
-const all = () => {
-  return new Promise((resolve, reject) => {
-    db.transaction((tx) => {
-      //comando SQL modificável
-      tx.executeSql(
-        "SELECT * FROM cars;",
+        "SELECT * FROM tb_user;",
         [],
-        //-----------------------
         (_, { rows }) => resolve(rows._array),
         (_, error) => reject(error) // erro interno em tx.executeSql
       );
@@ -138,35 +87,11 @@ const all = () => {
   });
 };
 
-/**
- * REMOVE UM REGISTRO POR MEIO DO ID
- * - Recebe o ID do registro;
- * - Retorna uma Promise:
- *  - O resultado da Promise a quantidade de registros removidos (zero indica que nada foi removido);
- *  - Pode retornar erro (reject) caso o ID não exista ou então caso ocorra erro no SQL.
- */
-const remove = (id) => {
-  return new Promise((resolve, reject) => {
-    db.transaction((tx) => {
-      //comando SQL modificável
-      tx.executeSql(
-        "DELETE FROM cars WHERE id=?;",
-        [id],
-        //-----------------------
-        (_, { rowsAffected }) => {
-          resolve(rowsAffected);
-        },
-        (_, error) => reject(error) // erro interno em tx.executeSql
-      );
-    });
-  });
-};
+
+
 
 export default {
-  create,
-  update,
-  find,
-  findByBrand,
-  all,
-  remove,
+  create_user,
+  update_progress,
+  findAll
 };

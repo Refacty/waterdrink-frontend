@@ -4,11 +4,35 @@ import { Lato_900Black, Lato_100Thin, useFonts } from '@expo-google-fonts/lato';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import Modal from "react-native-modal";
 import WaveBorder from "../../components/WaveBorder"
+import TbUser from '../../services/tbUser/TbUser';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 
-
 export default function Home({ route }) {
+
+  const [lsAgua, setLsAgua] = useState(0);
+
+  const atualizaQuantidadeAgua = (lsAgua) => {
+      return setLsAgua(lsAgua);
+  }
+
+  const BuscaDados = async () => {
+    try {
+      users = await TbUser.findAll(); 
+      if (users && users.length > 0) {
+        atualizaQuantidadeAgua(users[0].user_daily_progress)
+        console.log("BANCO: ", users[0])
+      } else {
+        console.log('Nenhum usuário encontrado.');
+      }
+    } catch (error) {
+      console.error('Erro ao buscar usuários:', error);
+      throw error;
+    }
+  };
+
+  BuscaDados() // Chama a função para buscar os dados do usuário.
+  
 
   const isModalVisible = route.params ? route.params.isModalVisible : false;
 
@@ -44,16 +68,14 @@ export default function Home({ route }) {
 
   return (
     <SafeAreaView style={Estilo.container}>
-      <Text className="text-lg font-lato-900 text-default">Você bebeu 20 Litros de água.</Text>
+      <Text className="text-lg font-lato-900 text-default">Você bebeu {lsAgua} Litros de água.</Text>
       <AnimatedCircularProgress
         size={250}
         width={18}
-        fill={80}
+        fill={50}
         tintColor="#007784"
         backgroundColor="#d9d9d9"
         style={{ paddingTop: 27 }} />
-
-
 
       <Modal isVisible={isModalVisible} style={{ alignItems: 'center'}} coverScreen={false}>
         <View>

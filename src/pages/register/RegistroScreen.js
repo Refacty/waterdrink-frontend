@@ -6,6 +6,7 @@ import CustomInputPass from '../../components/inputPassword';
 import { Lato_900Black, Lato_100Thin, useFonts } from '@expo-google-fonts/lato';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import axios from 'axios';
+import TbUser from '../../services/tbUser/TbUser';
 
 // funçãoo 'Main'
 const App = ({navigation}) => { 
@@ -71,9 +72,24 @@ const App = ({navigation}) => {
   
     if (senha === rsenha) {
       try {
-        await axios.post('http://refacty.com:8080/tb_user', userData);
-        navigation.navigate("MainStack")
+        const response = await axios.post('http://refacty.com:8080/tb_user', userData);
+        const newUser = response.data;
+        Alert.alert(JSON.stringify(response.data));
+        console.log("API: ", JSON.stringify(response.data))
+        await TbUser.create_user({
+          user_id: newUser.user_id,
+          user_name : newUser.name,
+          user_email : newUser.email,
+          user_weight : newUser.weight,
+          user_birthday : newUser.birthday,
+          user_profession : newUser.profession,
+          user_weekly_progress : 2,
+          user_daily_progress : 2,
+          user_session : newUser.token})
+
+         navigation.navigate("MainStack")
       } catch (error) {
+        console.log('Erro no catch:', error);
         Alert.alert(JSON.stringify(error));
       }
     } else {
