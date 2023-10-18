@@ -87,7 +87,7 @@ const App = ({navigation}) => {
           user_daily_progress : 2,
           user_session : newUser.token})
 
-         navigation.navigate("MainStack")
+         navigation.navigate("WeightScreen")
       } catch (error) {
         console.log('Erro no catch:', error);
         Alert.alert(JSON.stringify(error));

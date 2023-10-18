@@ -6,7 +6,7 @@ import db from "../sqlLite/DbManager";
  */
 db.transaction((tx) => {
   //<<<<<<<<<<<<<<<<<<<<<<<< USE ISSO APENAS DURANTE OS TESTES!!! >>>>>>>>>>>>>>>>>>>>>>>
-  tx.executeSql("DROP TABLE tb_user;")
+  
   //<<<<<<<<<<<<<<<<<<<<<<<< USE ISSO APENAS DURANTE OS TESTES!!! >>>>>>>>>>>>>>>>>>>>>>>
 
   tx.executeSql(
@@ -86,8 +86,6 @@ const findAll = () => {
     });
   });
 };
-
-
 
 
 export default {

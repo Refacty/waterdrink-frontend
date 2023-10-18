@@ -90,8 +90,6 @@ export default function Home({ route }) {
               <Text style={{ fontSize: 12, fontFamily: 'Lato_900Black', color: '#007784', paddingTop: 5 }}>200ML</Text>
             </TouchableOpacity>
 
-
-
             <TouchableOpacity style={{ margin: 10, padding: 20, backgroundColor: 'white', borderRadius: 10, alignItems: 'center' }}>
               <Image
                 source={require('../../images/Copo300.png')}
@@ -100,8 +98,6 @@ export default function Home({ route }) {
               <Text style={{ fontSize: 12, fontFamily: 'Lato_900Black', color: '#007784', paddingTop: 5 }}>300ML</Text>
             </TouchableOpacity>
 
-
-
             <TouchableOpacity style={{ margin: 10, padding: 20, backgroundColor: 'white', borderRadius: 10, alignItems: 'center' }}>
               <Image
                 source={require('../../images/Garrafa500.png')}
@@ -109,8 +105,6 @@ export default function Home({ route }) {
               />
               <Text style={{ fontSize: 12, fontFamily: 'Lato_900Black', color: '#007784', paddingTop: 5 }}>500ML</Text>
             </TouchableOpacity>
-
-
 
             <TouchableOpacity style={{ margin: 10, padding: 20, backgroundColor: 'white', borderRadius: 10, alignItems: 'center', right: 200, bottom: 170 }}>
               <Image

@@ -4,11 +4,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons'; 
 import HomeScreen from '../../src/pages/home/HomeScreen';
-import Profile from '../pages/profile/Profile';
+import Profile from '../pages/profile/ProfileScreen';
 import { useNavigation } from '@react-navigation/native';
 import RegistroScreen from '../../src/pages/register/RegistroScreen';
 import { View, TouchableOpacity } from 'react-native';
-import { FOCUS } from 'nativewind/dist/utils/selector';
+import WeightScreen from "../../src/pages/weight/WeightScreen"
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -77,7 +77,7 @@ const MainStack = () => {
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name="ProfileScreen"
         component={Profile}
         options={{
           headerShown: false,
@@ -94,8 +94,9 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="RegistroScreen">
-        <Stack.Screen name="RegistroScreen" component={RegistroScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="MainStack" component={MainStack} options={{ headerShown: false }} />
+      <Stack.Screen name="RegistroScreen" component={RegistroScreen} options={{ headerShown: false, gestureEnabled: false}} />
+      <Stack.Screen name="WeightScreen" component={WeightScreen} options={{ headerShown: false, gestureEnabled: false}} />
+      <Stack.Screen name="MainStack" component={MainStack} options={{ headerShown: false, gestureEnabled: false}} />
       </Stack.Navigator>
     </NavigationContainer>
   );
