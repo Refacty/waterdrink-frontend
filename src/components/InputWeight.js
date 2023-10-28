@@ -26,6 +26,7 @@ const InputWeight = ({ placeholder, Value, onChangeText  }) => {
       placeholder={placeholder}
       onChangeText={onChangeText}
       value={Value}
+      maxLength={6}
       keyboardType='numeric'
     />
   );

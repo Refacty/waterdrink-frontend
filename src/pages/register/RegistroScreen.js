@@ -43,14 +43,12 @@ const App = ({navigation}) => {
     "name": nome,
     "email": email,
     "password": senha,
-    "weight": null,
+    "weight": 0,
     "birthday": null,
     "profession": null,
-    "progress": {
-      "progress_id": 1,
-      "weeklyProgress": 1,
-      "dailyProgress": 0.0
-    }
+    "progress_id": 1,
+    "weeklyProgress": 1,
+    "dailyProgress": 0.0
   }
  
   //Função assincrona que envia os dados de cadastro para API no back-end.
@@ -72,7 +70,7 @@ const App = ({navigation}) => {
   
     if (senha === rsenha) {
       try {
-        const response = await axios.post('http://refacty.com:8080/tb_user', userData);
+        const response = await axios.post('https://10.0.0.119:8080/tb_user', userData);
         const newUser = response.data;
         Alert.alert(JSON.stringify(response.data));
         console.log("API: ", JSON.stringify(response.data))
