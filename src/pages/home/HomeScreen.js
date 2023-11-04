@@ -4,23 +4,34 @@ import { Lato_900Black, Lato_100Thin, useFonts } from '@expo-google-fonts/lato';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import Modal from "react-native-modal";
 import WaveBorder from "../../components/WaveBorder"
-import TbUser from '../../services/tbUser/TbUser';
+import bd from '../../services/tbUser/TbUser';
 import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 
 export default function Home({ route }) {
 
   const [lsAgua, setLsAgua] = useState(0);
-
-  const atualizaQuantidadeAgua = (lsAgua) => {
+  const atualizaQuantidadeAgua = lsAgua => {
       return setLsAgua(lsAgua);
   }
 
+  const [lsProgresso, setLsProgresso] = useState(0)
+  const atualizaProgresso = value => {
+      return setLsProgresso(value)
+  }
+
+  const [lsQtdadeDiaria, setQtdadeDiaria] = useState(0)
+  const atualizaQtdadeDiaria = value => {
+    return setQtdadeDiaria(value)
+}
+
   const BuscaDados = async () => {
     try {
-      users = await TbUser.findAll(); 
+      users = await bd.findAll(); 
       if (users && users.length > 0) {
         atualizaQuantidadeAgua(users[0].user_daily_progress)
+        atualizaProgresso(((users[0].user_daily_progress) / (users[0].user_weight / 35)) * 100)
+        atualizaQtdadeDiaria((users[0].user_weight / 35))
         console.log("BANCO: ", users[0])
       } else {
         console.log('Nenhum usuário encontrado.');
@@ -32,7 +43,6 @@ export default function Home({ route }) {
   };
 
   BuscaDados() // Chama a função para buscar os dados do usuário.
-  
 
   const isModalVisible = route.params ? route.params.isModalVisible : false;
 
@@ -72,7 +82,7 @@ export default function Home({ route }) {
       <AnimatedCircularProgress
         size={250}
         width={18}
-        fill={50}
+        fill={lsProgresso}
         tintColor="#007784"
         backgroundColor="#d9d9d9"
         style={{ paddingTop: 27 }} />
@@ -82,7 +92,7 @@ export default function Home({ route }) {
           <WaveBorder />
           <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: -900 }}>
 
-            <TouchableOpacity  style={{ margin: 10, padding: 20, backgroundColor: 'white', borderRadius: 10, alignItems: 'center', left: 200, bottom: 170 }}>
+            <TouchableOpacity style={{ margin: 10, padding: 20, backgroundColor: 'white', borderRadius: 10, alignItems: 'center', left: 200, bottom: 170 }}>
               <Image
                 source={require('../../images/Copo200.png')}
                 style={{ width: 100, height: 100, resizeMode: 'contain' }}
@@ -117,8 +127,8 @@ export default function Home({ route }) {
         </View>
       </Modal>
 
-      <Text className="text-8xl bottom-44 text-default" style={{ fontSize: 80, fontFamily: 'Lato_900Black' }}>80%</Text>
-      <Text className="bottom-20" style={{ fontFamily: 'Lato_900Black', color: '#007784', width: '100%', flexDirection: 'row', fontSize: 15, textAlign: 'center' }}>A quantidade de água necessária de acordo com o seu peso é de 2,45 litros por dia. </Text>
+      <Text className="text-8xl bottom-44 text-default" style={{ fontSize: 80, fontFamily: 'Lato_900Black' }}>{Math.round(lsProgresso)}%</Text>
+      <Text className="bottom-20" style={{ fontFamily: 'Lato_900Black', color: '#007784', width: '100%', flexDirection: 'row', fontSize: 15, textAlign: 'center' }}>A quantidade de água necessária de acordo com o seu peso é de {lsQtdadeDiaria.toFixed(2)} litros por dia. </Text>
       <View style={{ borderRadius: 20, width: '132%', height: '25%', backgroundColor:"#D4D4D4"}}>
         <Text style={{ textAlign: 'center', fontSize: 15, marginTop: 10, fontFamily: 'Lato_900Black', color: '#007784', fontSize: 20 }}>Você Sabia?</Text>
         <Image source={require('../../images/bixinho.png')} style={{ width: 240, height: undefined, aspectRatio: 1, right: 80, bottom: 65 }} />
