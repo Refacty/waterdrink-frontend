@@ -6,11 +6,10 @@ import db from "../sqlLite/DbManager";
  */
 db.transaction((tx) => {
   //<<<<<<<<<<<<<<<<<<<<<<<< USE ISSO APENAS DURANTE OS TESTES!!! >>>>>>>>>>>>>>>>>>>>>>>
-  
   //<<<<<<<<<<<<<<<<<<<<<<<< USE ISSO APENAS DURANTE OS TESTES!!! >>>>>>>>>>>>>>>>>>>>>>>
 
   tx.executeSql(
-    "CREATE TABLE IF NOT EXISTS tb_user (user_id INTEGER PRIMARY KEY, user_name VARCHAR(255), user_email VARCHAR(255), user_session VARCHAR(255), user_birthday DATE, user_daily_progress FLOAT, user_profession VARCHAR(255), user_weekly_progress FLOAT, user_weight FLOAT);"
+    "CREATE TABLE IF NOT EXISTS tb_user (bd_key INTEGER PRIMARY KEY, user_id, user_name VARCHAR(255), user_email VARCHAR(255), user_session TEXT, user_birthday DATE, user_daily_progress FLOAT, user_profession VARCHAR(255), user_weekly_progress FLOAT, user_weight FLOAT);"
   );
 });
 
@@ -34,6 +33,40 @@ const create_user = (obj) => {
           else reject("Error inserting obj: " + JSON.stringify(obj)); // insert falhou
         },
         (_, error) => reject(error) // erro interno em tx.executeSql
+      );
+    });
+  });
+};
+
+const consultar = (sql, params = []) => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        sql,
+        params,
+        (_, result) => {
+          resolve(result.rows._array); 
+        },
+        (_, error) => {
+          reject(error); 
+        }
+      );
+    });
+  });
+};
+
+const executar = (sql, params = []) => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        sql,
+        params,
+        () => {
+          resolve(); // Resolva a promessa sem um valor, já que é uma ação sem retorno
+        },
+        (_, error) => {
+          reject(error); // Rejeite a promessa em caso de erro
+        }
       );
     });
   });
@@ -91,5 +124,7 @@ const findAll = () => {
 export default {
   create_user,
   update_progress,
-  findAll
+  findAll,
+  executar,
+  consultar
 };

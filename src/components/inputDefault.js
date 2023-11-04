@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { Lato_900Black, Lato_100Thin, useFonts } from '@expo-google-fonts/lato';
 
-const CustomInput = ({ placeholder, Value, onChangeText  }) => {
+const CustomInput = ({ placeholder, value, onChangeText, style, editable  }) => {
   const [isShort, setIsShort] = useState(false);
   const handleInput = (text) => {
     setInputValue(text);
@@ -21,11 +21,12 @@ const CustomInput = ({ placeholder, Value, onChangeText  }) => {
 
   return (
     <TextInput
-      style={[inputStyle, InputEs.shadow]}
+      style={[inputStyle, InputEs.shadow, InputEs.estilo, style]}
       className="pl-3 bg-white w-full rounded-20 mb-5 text-black h-12 font-lato-900"
       placeholder={placeholder}
       onChangeText={onChangeText}
-      value={Value}
+      value={value}
+      editable={editable}
     />
   );
 };
@@ -39,6 +40,9 @@ const InputEs = StyleSheet.create({
   isNormal: {
     color: 'black',
   },
+  estilo:{
+    backgroundColor:"white"
+  }
 });
 
 export default CustomInput;

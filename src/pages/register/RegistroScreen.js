@@ -6,10 +6,22 @@ import CustomInputPass from '../../components/inputPassword';
 import { Lato_900Black, Lato_100Thin, useFonts } from '@expo-google-fonts/lato';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import axios from 'axios';
-import TbUser from '../../services/tbUser/TbUser';
+import bd from '../../services/tbUser/TbUser';
 
 // funçãoo 'Main'
 const App = ({navigation}) => { 
+
+  async function iniciarBD() {
+    await bd.executar("CREATE TABLE IF NOT EXISTS tb_user (bd_key INTEGER PRIMARY KEY, user_id INTEGER, user_name VARCHAR(255), user_email VARCHAR(255), user_session VARCHAR(255), user_birthday DATE, user_daily_progress FLOAT, user_profession VARCHAR(255), user_weekly_progress FLOAT, user_weight FLOAT);").then((response) => {
+    })
+    .catch((error) => {
+    })
+
+    await bd.executar("DELETE FROM tb_user;").then((response) => {
+    })
+    .catch((error) => {
+    })
+}
   
   // Carregar as fonts
   const [fontLoaded] = useFonts({
@@ -51,8 +63,11 @@ const App = ({navigation}) => {
     "dailyProgress": 0.0
   }
  
-  //Função assincrona que envia os dados de cadastro para API no back-end.
+  //Função assincrona que envia os dados de cadastro para API no back-end.\
+  iniciarBD()
   const postData = async () => {
+    
+
     if (nome === "") {
       Alert.alert('Nome vazio');
       return;
@@ -67,28 +82,29 @@ const App = ({navigation}) => {
       Alert.alert('Senha vazia');
       return;
     }
-  
+
     if (senha === rsenha) {
       try {
-        const response = await axios.post('https://10.0.0.119:8080/tb_user', userData);
+        const response = await axios.post('http://10.0.0.119:8080/register', userData);
         const newUser = response.data;
         Alert.alert(JSON.stringify(response.data));
         console.log("API: ", JSON.stringify(response.data))
-        await TbUser.create_user({
-          user_id: newUser.user_id,
-          user_name : newUser.name,
-          user_email : newUser.email,
-          user_weight : newUser.weight,
-          user_birthday : newUser.birthday,
-          user_profession : newUser.profession,
+        
+        await bd.create_user({
+          user_id: newUser.user.user_id,
+          user_name : newUser.user.name,
+          user_email : newUser.user.email,
+          user_weight : newUser.user.weight,
+          user_birthday : newUser.user.birthday,
+          user_profession : newUser.user.profession,
           user_weekly_progress : 2,
           user_daily_progress : 2,
           user_session : newUser.token})
-
+          
          navigation.navigate("WeightScreen")
       } catch (error) {
-        console.log('Erro no catch:', error);
-        Alert.alert(JSON.stringify(error));
+        console.log('Erro da API:', error.response.data);
+        Alert.alert(`STATUS: ${JSON.stringify(error.response.status)} || JSON: ${JSON.stringify(error.response.data)}`);
       }
     } else {
       Alert.alert('Senhas não coincidem.');
@@ -101,10 +117,9 @@ const App = ({navigation}) => {
     return null;
   }
   const logo = require('../../images/waterdrink.png');
-
-  //Retorna os elementos da tela.
+  
   return (
-    <SafeAreaView style={{backgroundColor:"#E6FCFF"}}>
+    <SafeAreaView style={{backgroundColor:"#E6FCFF", paddingTop:50}}>
       <View className="w-4/5 flex justify-center items-center m-auto h-full pt-10">
         <Image source={logo} className="w-28 h-28"/>
           
@@ -115,7 +130,7 @@ const App = ({navigation}) => {
           <CustomInput placeholder={'Email'} onChangeText={handlerEmail} value={email}></CustomInput>
 
           <CustomInputPass placeholder={'Senha'} onChangeText={handlerSenha} value={senha}></CustomInputPass>
-          <CustomInputPass placeholder={'Repita sua senha'} onChangeText={handlerRsenha} value={rsenha}></CustomInputPass>
+          <CustomInputPass placeholder={'Repita sua senha'} onChangeText={handlerRsenha} value={rsenha} vStyle={{marginTop:20, marginBottom:20}}></CustomInputPass>
           
           <View className="w-full flex flex-row items-center">
             <BouncyCheckbox 

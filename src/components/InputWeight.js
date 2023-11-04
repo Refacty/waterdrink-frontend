@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { Lato_900Black, Lato_100Thin, useFonts } from '@expo-google-fonts/lato';
 
-const InputWeight = ({ placeholder, Value, onChangeText  }) => {
+const InputWeight = ({ placeholder, Value, onChangeText, style }) => {
   const [isShort, setIsShort] = useState(false);
   const handleInput = (text) => {
     setInputValue(text);
@@ -21,7 +21,7 @@ const InputWeight = ({ placeholder, Value, onChangeText  }) => {
 
   return (
     <TextInput
-      style={[inputStyle, InputEs.shadow, {fontSize:40, textAlign:'center'}]}
+      style={[inputStyle, InputEs.shadow, {fontSize:40, textAlign:'center'}, style]}
       className="pl-3 bg-white w-96 rounded-20 mb-5 text-black h-16 font-lato-900"
       placeholder={placeholder}
       onChangeText={onChangeText}

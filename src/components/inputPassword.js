@@ -4,7 +4,7 @@ import { Lato_900Black, Lato_100Thin, useFonts } from '@expo-google-fonts/lato';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { Entypo } from '@expo/vector-icons'; 
 
-const CustomInputPass = ({ placeholder, Value, onChangeText, pStyle }) => {
+const CustomInputPass = ({ placeholder, Value, onChangeText, pStyle, vStyle }) => {
   const [passwordVisible, setPasswordVisible] = useState(true);
 
   const togglePasswordView = () => {
@@ -12,7 +12,7 @@ const CustomInputPass = ({ placeholder, Value, onChangeText, pStyle }) => {
   }
 
   return (
-    <View style={InputStyle.mostrarSenha} className="relative w-full flex flex-row justify-center">
+    <View style={[InputStyle.mostrarSenha, InputStyle.estilo, vStyle]} className="relative w-full flex flex-row justify-center">
       <TextInput
         style={[pStyle]}
         className="pl-3 bg-white w-full rounded-20 mb-5 shadow-sm text-black h-12 font-lato-900"
@@ -20,6 +20,7 @@ const CustomInputPass = ({ placeholder, Value, onChangeText, pStyle }) => {
         onChangeText={onChangeText}
         value={Value}
         secureTextEntry={!passwordVisible}
+        
       />
       <Entypo
         name={passwordVisible ? "eye" : "eye-with-line"}
@@ -38,6 +39,11 @@ const InputStyle = StyleSheet.create({
     top: 12,
     right: 16,
   },
+  estilo:{
+    height:50,
+    backgroundColor:"white",
+    borderRadius:45,
+  }
 });
 
 export default CustomInputPass;
