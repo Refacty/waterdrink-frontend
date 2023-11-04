@@ -99,7 +99,7 @@ export default function WeightScreen({ navigation }) {
       <InputWeight placeholder={""} value={gWeight} onChangeText={handlerWeightChange} style={{ backgroundColor: "white", width:"90%", height:"6%", fontSize:25}}></InputWeight>
       <Text style={{ fontSize: 35, fontFamily: "Lato_900Black", top:30, color:"#007784" }}>Data de Nascimento:</Text>
       <View style={{ flexDirection: 'row', alignItems: 'center', width: "100%", height:"100%", marginRight: 50, paddingBottom:15, position:"absolute", paddingTop:55, paddingLeft:40 }}>
-      <CustomInput value={`${gbirthday.getDate() < 10 ? '0' + gbirthday.getDate() : gbirthday.getDate()}/${gbirthday.getMonth() + 1 < 10 ? '0' + (gbirthday.getMonth() + 1) : gbirthday.getMonth() + 1}/${gbirthday.getFullYear()}`} style={{width:"80%", height:"6%", marginBottom:10, textAlign:"center", fontSize:2}} editable={false}></CustomInput>
+      <CustomInput value={`${gbirthday.getDate() < 10 ? '0' + gbirthday.getDate() : gbirthday.getDate()}/${gbirthday.getMonth() + 1 < 10 ? '0' + (gbirthday.getMonth() + 1) : gbirthday.getMonth() + 1}/${gbirthday.getFullYear()}`} style={{width:"80%", height:"6%", marginBottom:10, textAlign:"center", fontSize:25}} editable={false}></CustomInput>
         <TouchableOpacity style={{marginLeft:10}} onPress={showDatePicker}>
         <MaterialCommunityIcons name="calendar" size={30} color="#007784" />
         </TouchableOpacity>
