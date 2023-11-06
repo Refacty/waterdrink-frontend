@@ -5,8 +5,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { Entypo } from '@expo/vector-icons'; 
 
 const CustomInputPass = ({ placeholder, Value, onChangeText, pStyle, vStyle }) => {
-  const [passwordVisible, setPasswordVisible] = useState(true);
-
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const togglePasswordView = () => {
     setPasswordVisible(!passwordVisible);
   }

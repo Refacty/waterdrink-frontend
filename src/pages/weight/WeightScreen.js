@@ -45,41 +45,34 @@ export default function WeightScreen({ navigation }) {
     birthday: gbirthday.toISOString().split('T')[0], // Formato "yyyy-MM-dd"
   }
 
-  const enviarPeso = () => {
-    if (!(gWeight === "")) {
-      bd.consultar("SELECT user_id, user_session FROM tb_user").then((result) => {
-        const headers = { 'Authorization': `${result[0].user_session}` }
-        mId = result[0].user_id;
-        console.log("BANCO: ", result);
-        console.log("ID: ", mId);
-        console.log("TOKEN: ", headers);
-        const url = ("http://26.103.139.198:8080/tb_user/" + mId);
+  const enviarPeso = async () => {
+    try {
+      const result = await bd.consultar("SELECT user_id, user_session FROM tb_user");
+  
+      if (result && result.length > 0) {
+        const headers = { 'Authorization': result[0].user_session };
+        const mId = result[0].user_id;
+  
+        const url = "http://26.103.139.198:8080/tb_user/" + parseInt(mId);
         console.log("URL: ", url);
         console.log("REQUEST: ", dataUpdate, headers);
-        axios.put(url, dataUpdate, { headers })
-          .then((response) => {
-            console.log('Requisição PUT bem-sucedida:', response.data);
-
-            bd.executar("UPDATE tb_user SET user_weight = ?, user_birthday = ?", [dataUpdate.weight, dataUpdate.birthday]).then(response => {
-              console.log(response);
-            })
-              .catch(error => {
-                console.error(error);
-              });
-
-            navigation.navigate("MainStack");
-          })
-          .catch((error) => {
-            console.error('Erro na requisição PUT:', error.response.data);
-          });
-      })
-        .catch((error) => {
-          console.error(error);
-        });
-    } else {
-      Alert.alert("Campo de peso não pode estar vazio.");
+  
+        const response = await axios.put(url, dataUpdate, { headers });
+        console.log('Requisição PUT bem-sucedida:', response.data);
+  
+        await bd.executar("UPDATE tb_user SET user_weight = ?, user_birthday = ?", [
+          dataUpdate.weight,
+          dataUpdate.birthday,
+        ]);
+        navigation.navigate("MainStack");
+      } else {
+        Alert.alert("Usuário não encontrado.");
+      }
+    } catch (error) {
+      console.error('Erro na requisição PUT:', JSON.stringify(error.response.data));
     }
-  }
+  };
+  
 
   const [fontLoaded] = useFonts({
     Lato_100Thin,

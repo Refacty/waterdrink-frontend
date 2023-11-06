@@ -91,7 +91,7 @@ const App = ({navigation}) => {
         console.log("API: ", JSON.stringify(response.data))
         
         await bd.create_user({
-          user_id: newUser.user.user_id,
+          user_id: parseInt(newUser.user.user_id),
           user_name : newUser.user.name,
           user_email : newUser.user.email,
           user_weight : newUser.user.weight,
