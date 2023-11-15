@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import {SafeAreaView, Text, View, StyleSheet, Image, TouchableOpacity, Alert} from 'react-native';
 import { Lato_900Black, Lato_100Thin, useFonts } from '@expo-google-fonts/lato';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import Modal from "react-native-modal";
 import WaveBorder from "../../components/WaveBorder"
 import bd from '../../services/tbUser/TbUser';
-import { Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 
 export default function Home({ route }) {
 
   //[Tipo se refere se é o progresso (D)iario/(S)emanal, qtdade se refere ao qtdade em litros de água tomada.]
   async function atualizaProgressoBd(astrTipo, astrQtdade) {
-    // Validate input parameters
     if (astrTipo !== "D" && astrTipo !== "W") {
       throw new Error("Invalid astrTipo value. It should be 'D' or 'W'.");
     }
@@ -24,6 +22,37 @@ export default function Home({ route }) {
     try {
       const response = await bd.executar(lstrSQL, [astrQtdade]);
       console.log( "O usuario consumiu ", astrQtdade, " de água.");
+      try {
+        bd.consultar("SELECT user_daily_progress, user_weekly_progress, user_session, user_id from tb_user;").then(response =>{
+          if (response.length > 0){
+
+            const data = {
+              weeklyProgress : response[0].user_daily_progress,
+              dailyProgress : response[0].user_weekly_progress
+            }
+
+            const headers = { 'Authorization': response[0].user_session };
+            const id = response[0].user_id
+            const url = "http://10.0.0.119:8080/tb_user/" + parseInt(id)
+
+            console.log("REQUEST: ", url, data, { headers })
+            const api = axios.put(url, data, { headers })
+            .then(response => {
+              console.log("API: ", JSON.stringify(response.status))
+            })
+            .catch(error => {
+              Alert.alert("ERRO: ", error)
+            })
+          }
+
+          else{
+            Alert.alert("Erro no banco")
+          }
+        })
+      }
+      catch (error){
+        Alert.alert(error)
+      }
       return true;
     } catch (error) {
       console.error(error);

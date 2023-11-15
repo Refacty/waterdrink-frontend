@@ -53,7 +53,7 @@ export default function WeightScreen({ navigation }) {
         const headers = { 'Authorization': result[0].user_session };
         const mId = result[0].user_id;
   
-        const url = "http://26.103.139.198:8080/tb_user/" + parseInt(mId);
+        const url = "http://10.0.0.119:8080/tb_user/" + parseInt(mId);
         console.log("URL: ", url);
         console.log("REQUEST: ", dataUpdate, headers);
   

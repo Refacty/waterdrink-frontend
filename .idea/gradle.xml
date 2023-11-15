@@ -4,7 +4,6 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="testRunner" value="GRADLE" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/node_modules/@react-native-community/cli-platform-android" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
@@ -14,7 +13,6 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="testRunner" value="GRADLE" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/node_modules/@react-native/gradle-plugin" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
@@ -24,7 +22,6 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="testRunner" value="GRADLE" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/node_modules/expo-application/android" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
@@ -34,7 +31,6 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="testRunner" value="GRADLE" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/node_modules/expo-constants/android" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
@@ -44,7 +40,6 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="testRunner" value="GRADLE" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/node_modules/expo-constants/scripts" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
@@ -54,7 +49,6 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="testRunner" value="GRADLE" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/node_modules/expo-file-system/android" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
@@ -64,7 +58,6 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="testRunner" value="GRADLE" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/node_modules/expo-font/android" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
@@ -74,7 +67,6 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="testRunner" value="GRADLE" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/node_modules/expo-keep-awake/android" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
@@ -84,7 +76,6 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="testRunner" value="GRADLE" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/node_modules/expo-modules-autolinking/scripts/android" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
@@ -94,7 +85,6 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="testRunner" value="GRADLE" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/node_modules/expo-modules-core/android" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
@@ -104,7 +94,6 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="testRunner" value="GRADLE" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/node_modules/expo-modules-core/android-annotation" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
@@ -114,7 +103,6 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="testRunner" value="GRADLE" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/node_modules/expo-modules-core/android-annotation-processor" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
@@ -124,7 +112,6 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="testRunner" value="GRADLE" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/node_modules/expo/android" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
@@ -134,7 +121,6 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="testRunner" value="GRADLE" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/node_modules/expo/scripts" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
@@ -144,7 +130,6 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="testRunner" value="GRADLE" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/node_modules/react-native" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">

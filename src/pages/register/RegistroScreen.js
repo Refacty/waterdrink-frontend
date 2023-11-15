@@ -12,7 +12,7 @@ import bd from '../../services/tbUser/TbUser';
 const App = ({navigation}) => { 
 
   async function iniciarBD() {
-    await bd.executar("CREATE TABLE IF NOT EXISTS tb_user (bd_key INTEGER PRIMARY KEY, user_id INTEGER, user_name VARCHAR(255), user_email VARCHAR(255), user_session VARCHAR(255), user_birthday DATE, user_daily_progress FLOAT, user_profession VARCHAR(255), user_weekly_progress FLOAT, user_weight FLOAT);").then((response) => {
+    await bd.executar("CREATE TABLE IF NOT EXISTS tb_user (bd_key INTEGER PRIMARY KEY, user_id INTEGER, user_logado INTEGER default(0), user_name VARCHAR(255), user_email VARCHAR(255), user_session VARCHAR(255), user_birthday DATE, user_daily_progress FLOAT, user_profession VARCHAR(255), user_weekly_progress FLOAT, user_weight FLOAT);").then((response) => {
     })
     .catch((error) => {
     })
@@ -97,8 +97,8 @@ const App = ({navigation}) => {
           user_weight : newUser.user.weight,
           user_birthday : newUser.user.birthday,
           user_profession : newUser.user.profession,
-          user_weekly_progress : 2,
-          user_daily_progress : 2,
+          user_weekly_progress : 0,
+          user_daily_progress : 0,
           user_session : newUser.token})
           
          navigation.navigate("WeightScreen")
