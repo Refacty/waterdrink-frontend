@@ -9,6 +9,11 @@ import axios from 'axios';
 
 export default function Home({ route }) {
 
+  const [refreshKey, setRefreshKey] = useState(0);
+  const handleRefresh = () => {
+    setRefreshKey(prevKey => prevKey + 1);
+  };
+
   //[Tipo se refere se é o progresso (D)iario/(S)emanal, qtdade se refere ao qtdade em litros de água tomada.]
   async function atualizaProgressoBd(astrTipo, astrQtdade) {
     if (astrTipo !== "D" && astrTipo !== "W") {
@@ -22,6 +27,7 @@ export default function Home({ route }) {
     try {
       const response = await bd.executar(lstrSQL, [astrQtdade]);
       console.log( "O usuario consumiu ", astrQtdade, " de água.");
+      handleRefresh()
       try {
         bd.consultar("SELECT user_daily_progress, user_weekly_progress, user_session, user_id from tb_user;").then(response =>{
           if (response.length > 0){
@@ -43,10 +49,6 @@ export default function Home({ route }) {
             .catch(error => {
               Alert.alert("ERRO: ", error)
             })
-          }
-
-          else{
-            Alert.alert("Erro no banco")
           }
         })
       }
