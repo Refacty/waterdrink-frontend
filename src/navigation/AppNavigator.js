@@ -94,9 +94,9 @@ const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="RegistroScreen">
-      <Stack.Screen name="RegistroScreen" component={RegistroScreen} options={{ headerShown: false, gestureEnabled: false}} />
-      <Stack.Screen name="WeightScreen" component={WeightScreen} options={{ headerShown: false, gestureEnabled: false}} />
-      <Stack.Screen name="MainStack" component={MainStack} options={{ headerShown: false, gestureEnabled: false}} />
+      <Stack.Screen name="RegistroScreen" component={RegistroScreen} options={{ headerShown: false, gestureEnabled: false, headerLeft:null}} />
+      <Stack.Screen name="WeightScreen" component={WeightScreen} options={{ headerShown: false, gestureEnabled: false, headerLeft:null}} />
+      <Stack.Screen name="MainStack" component={MainStack} options={{ headerShown: false, gestureEnabled: false, headerLeft:null}} />
       </Stack.Navigator>
     </NavigationContainer>
   );

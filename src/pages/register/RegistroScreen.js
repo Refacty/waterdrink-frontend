@@ -104,7 +104,7 @@ const App = ({navigation}) => {
          navigation.navigate("WeightScreen")
       } catch (error) {
         console.log('Erro da API:', error.response.data);
-        Alert.alert(`STATUS: ${JSON.stringify(error.response.status)} || JSON: ${JSON.stringify(error.response.data)}`);
+        console.log(`STATUS: ${JSON.stringify(error.response.status)} || JSON: ${JSON.stringify(error.response.data)}`);
       }
     } else {
       Alert.alert('Senhas não coincidem.');
