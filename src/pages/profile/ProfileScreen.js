@@ -12,6 +12,11 @@ export default function Profile() {
    alignItems: 'center',
    marginBottom: 500,
   },
+  progressContainer: {
+   alignItems: 'center',
+   position:"absolute",
+   paddingBottom:150
+  },
   textoPerfil: {
    fontSize: 20,
    fontFamily: 'Lato_900Black',
@@ -29,6 +34,14 @@ export default function Profile() {
    fontFamily: 'Lato_900Black',
    color: '#AAAAAA',
   },
+  textoProgresso: {
+   marginTop:3,
+   fontSize: 14,
+   fontFamily: 'Lato_900Black',
+   color: '#007784',
+   paddingRight:175,
+   paddingBottom:5
+  },
   imagemPerfil: {
    backgroundColor: '#DEDEDE',
    width: 150,
@@ -45,6 +58,12 @@ export default function Profile() {
        <Text style={styles.textoNome}>Teste da Silva</Text>
        <Text style={styles.textoProfissao}>Vagabundo</Text>
       </View>
+
+     <View style={styles.progressContainer}>
+         <Text style={styles.textoProgresso}>Progresso semanal:</Text>
+         <Progress.Bar progress={0.3} width={300} height={22} color={"#007784"}/>
+     </View>
+
      </SafeAreaView>
  );
 }

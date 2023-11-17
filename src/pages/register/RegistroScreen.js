@@ -87,7 +87,6 @@ const App = ({navigation}) => {
       try {
         const response = await axios.post('http://10.0.0.119:8080/register', userData);
         const newUser = response.data;
-        Alert.alert(JSON.stringify(response.data));
         console.log("API: ", JSON.stringify(response.data))
         
         await bd.create_user({
