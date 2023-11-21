@@ -8,6 +8,5 @@ import Home from './src/pages/home/HomeScreen';
 export default function App(){
   return(
   <AppNavigator/>
-
   )
 };

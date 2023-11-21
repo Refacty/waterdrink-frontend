@@ -9,7 +9,7 @@ import axios from 'axios';
 import bd from '../../services/tbUser/TbUser';
 
 // funçãoo 'Main'
-const App = ({navigation}) => { 
+const App = ({navigation}) => {
 
   async function iniciarBD() {
     await bd.executar("CREATE TABLE IF NOT EXISTS tb_user (bd_key INTEGER PRIMARY KEY, user_id INTEGER, user_logado INTEGER default(0), user_name VARCHAR(255), user_email VARCHAR(255), user_session VARCHAR(255), user_birthday DATE, user_daily_progress FLOAT, user_profession VARCHAR(255), user_weekly_progress FLOAT, user_weight FLOAT);").then((response) => {
@@ -22,7 +22,7 @@ const App = ({navigation}) => {
     .catch((error) => {
     })
 }
-  
+
   // Carregar as fonts
   const [fontLoaded] = useFonts({
     Lato_100Thin,
@@ -38,7 +38,7 @@ const App = ({navigation}) => {
   const [email, setEmail] = useState("");
   const handlerEmail = (inputValue) => {
     setEmail(inputValue);
- 
+
   }
   const [senha, setSenha] = useState("");
   const handlerSenha = (inputValue) => {
@@ -48,7 +48,7 @@ const App = ({navigation}) => {
   const [rsenha, setRsenha] = useState("");
   const handlerRsenha = (inputValue) => {
     setRsenha(inputValue);
-    
+
   }
 
   const userData = {
@@ -62,22 +62,22 @@ const App = ({navigation}) => {
     "weeklyProgress": 1,
     "dailyProgress": 0.0
   }
- 
+
   //Função assincrona que envia os dados de cadastro para API no back-end.\
   iniciarBD()
   const postData = async () => {
-    
+
 
     if (nome === "") {
       Alert.alert('Nome vazio');
       return;
     }
-  
+
     if (email === "") {
       Alert.alert('Email vazio');
       return;
     }
-  
+
     if (senha === "") {
       Alert.alert('Senha vazia');
       return;
@@ -85,10 +85,10 @@ const App = ({navigation}) => {
 
     if (senha === rsenha) {
       try {
-        const response = await axios.post('http://10.0.0.119:8080/register', userData);
+        const response = await axios.post('http://26.103.139.198:8080/register', userData);
         const newUser = response.data;
         console.log("API: ", JSON.stringify(response.data))
-        
+
         await bd.create_user({
           user_id: parseInt(newUser.user.user_id),
           user_name : newUser.user.name,
@@ -99,7 +99,7 @@ const App = ({navigation}) => {
           user_weekly_progress : 0,
           user_daily_progress : 0,
           user_session : newUser.token})
-          
+
          navigation.navigate("WeightScreen")
       } catch (error) {
         console.log('Erro da API:', error.response.data);
@@ -109,19 +109,19 @@ const App = ({navigation}) => {
       Alert.alert('Senhas não coincidem.');
     }
   };
-  
-  
+
+
   // Verificar se a fonte foi carregada, caso não for ele retorna nulo.
   if (!fontLoaded) {
     return null;
   }
   const logo = require('../../images/waterdrink.png');
-  
+
   return (
     <SafeAreaView style={{backgroundColor:"#E6FCFF", paddingTop:50}}>
       <View className="w-4/5 flex justify-center items-center m-auto h-full pt-10">
         <Image source={logo} className="w-28 h-28"/>
-          
+
         <Text className="text-5xl text-blue-400 font-lato-900" style={{color:"#007784"}}>Registrar-se</Text>
 
         <View className="w-full mt-5">
@@ -130,11 +130,11 @@ const App = ({navigation}) => {
 
           <CustomInputPass placeholder={'Senha'} onChangeText={handlerSenha} value={senha}></CustomInputPass>
           <CustomInputPass placeholder={'Repita sua senha'} onChangeText={handlerRsenha} value={rsenha} vStyle={{marginTop:20, marginBottom:20}}></CustomInputPass>
-          
+
           <View className="w-full flex flex-row items-center">
-            <BouncyCheckbox 
-              iconStyle={{ borderColor: "blue" }} 
-              fillColor="#007784" 
+            <BouncyCheckbox
+              iconStyle={{ borderColor: "blue" }}
+              fillColor="#007784"
               text='Lembrar senha'
               textStyle={{
                 textDecorationLine: "none",

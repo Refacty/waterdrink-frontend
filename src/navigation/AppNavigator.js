@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Ionicons } from '@expo/vector-icons'; 
+import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from '../../src/pages/home/HomeScreen';
 import Profile from '../pages/profile/ProfileScreen';
 import { useNavigation } from '@react-navigation/native';
-import RegistroScreen from '../../src/pages/register/RegistroScreen';
+import LoginScreen from "../pages/login/LoginScreen";
 import { View, TouchableOpacity } from 'react-native';
 import WeightScreen from "../../src/pages/weight/WeightScreen"
 
@@ -60,7 +60,7 @@ const MainStack = () => {
           tabPress: (e) => {
             e.preventDefault();
             const toggle = toggleModal();
-            toggle; 
+            toggle;
             navigation.navigate('HomeScreen', { isModalVisible: !isModalVisible });
           },
         }}
@@ -93,10 +93,10 @@ const MainStack = () => {
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="RegistroScreen">
-      <Stack.Screen name="RegistroScreen" component={RegistroScreen} options={{ headerShown: false, gestureEnabled: false, headerLeft:null}} />
-      <Stack.Screen name="WeightScreen" component={WeightScreen} options={{ headerShown: false, gestureEnabled: false, headerLeft:null}} />
-      <Stack.Screen name="MainStack" component={MainStack} options={{ headerShown: false, gestureEnabled: false, headerLeft:null}} />
+      <Stack.Navigator initialRouteName="LoginScreen">
+      <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false, gestureEnabled: false}} />
+      <Stack.Screen name="WeightScreen" component={WeightScreen} options={{ headerShown: false, gestureEnabled: false}} />
+      <Stack.Screen name="MainStack" component={MainStack} options={{ headerShown: false, gestureEnabled: false}} />
       </Stack.Navigator>
     </NavigationContainer>
   );
