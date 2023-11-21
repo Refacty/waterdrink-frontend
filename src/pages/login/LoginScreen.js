@@ -6,7 +6,6 @@ import BtnDefault from "../../components/btnDefault";
 import { Lato_900Black, Lato_100Thin, useFonts } from '@expo-google-fonts/lato';
 import axios from 'axios';
 import bd from '../../services/tbUser/TbUser';
-import logo from "../../images/waterdrink.png";
 
 export default function Login({navigation}) {
 
@@ -26,20 +25,24 @@ export default function Login({navigation}) {
             "email": getEmail,
             "password": getPassword
         }
-        const response = await axios.post('http://192.168.3.60:8080/login', Data).then(
-            response => {
-                console.log(response.data)
-                bd.executar("UPDATE tb_user SET user_session = ?;", [response.data]).then(
-                    response => {
-                        console.log("Funcionouuuuuuuuuuuuuu")
-                    })
-                    .catch(error => {
-                        console.log("Não funcionou :(", error)
-                    }
-                )
-                    .catch(error => {
-                        console.log("Deu errado no axios", JSON.stringify(error.data))
-                    })
+
+        const response = await axios.post('http://10.0.0.119:8080/login', Data)
+            .then(
+                        response => {
+                            console.log(response.data)
+                            bd.executar("UPDATE tb_user SET user_session = ?, user_id = ?;", [response.data.token, response.data.id])
+                                .then(
+                                response => {
+                                    console.log("Update feito com sucesso no BD.")
+                                })
+                                .catch(error => {
+                                    console.error("Erro no BD:", error)
+                                }
+                            )
+             .catch(
+                        error => {
+                            console.error("Erro na chamada para api:", JSON.stringify(error.data))
+                            })
             }
         );
 

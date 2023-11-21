@@ -1,7 +1,9 @@
 import React from 'react';
 import { SafeAreaView, Text, StyleSheet, View } from 'react-native';
 import * as Progress from 'react-native-progress';
+import CustomInput from "../../components/inputDefault";
 export default function Profile() {
+
  const styles = StyleSheet.create({
   container: {
    flex: 1,
@@ -15,7 +17,7 @@ export default function Profile() {
   progressContainer: {
    alignItems: 'center',
    position:"absolute",
-   paddingBottom:150
+   paddingTop:200
   },
   textoPerfil: {
    fontSize: 20,
@@ -48,6 +50,10 @@ export default function Profile() {
    height: 150,
    borderRadius: 75,
   },
+  dataInput:{
+    marginTop:20,
+   backgroundColor: "#DEDEDE"
+  }
  });
 
  return (
@@ -61,8 +67,13 @@ export default function Profile() {
 
      <View style={styles.progressContainer}>
          <Text style={styles.textoProgresso}>Progresso semanal:</Text>
-         <Progress.Bar progress={0.3} width={300} height={22} color={"#007784"}/>
+         <Progress.Bar progress={0.3} width={300} height={22} style={{marginBottom:20}} color={"#007784"}/>
+         <CustomInput style={styles.dataInput} editable={false}></CustomInput>
+         <CustomInput style={styles.dataInput} editable={false}></CustomInput>
+         <CustomInput style={styles.dataInput} editable={false}></CustomInput>
+         <CustomInput style={styles.dataInput} editable={false}></CustomInput>
      </View>
+
 
      </SafeAreaView>
  );
