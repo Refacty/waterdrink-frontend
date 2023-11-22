@@ -1,15 +1,15 @@
 import React, {useState} from 'react';
-import {View, SafeAreaView, StyleSheet, Image, Text} from 'react-native';
+import {View, SafeAreaView, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
 import CustomInput from "../../components/inputDefault";
 import CustomInputPass from "../../components/inputPassword";
 import BtnDefault from "../../components/btnDefault";
-import { Lato_900Black, Lato_100Thin, useFonts } from '@expo-google-fonts/lato';
+import { Lato_900Black, Lato_400Regular, Lato_100Thin, useFonts } from '@expo-google-fonts/lato';
 import axios from 'axios';
 import bd from '../../services/tbUser/TbUser';
 import logo from "../../images/waterdrink.png";
+import RegistroScreen from "../register/RegistroScreen";
 
 export default function Login({navigation}) {
-
     const [getEmail, setEmail] = useState("")
     function handlerEmail(email) {
         setEmail(email)
@@ -18,6 +18,14 @@ export default function Login({navigation}) {
     const [getPassword, setPassword] = useState("")
     function handlerPassword(password) {
         setPassword(password)
+    }
+
+    const [press, setPress] = useState(false)
+    function handlerPress(press) {
+        setPress(press)
+        if (press) {
+            navigation.navigate('RegistroScreen')
+        }
     }
 
 
@@ -49,7 +57,8 @@ export default function Login({navigation}) {
     // Carregar as fonts
     const [fontLoaded] = useFonts({
         Lato_100Thin,
-        Lato_900Black
+        Lato_900Black, Lato_400Regular,
+
     });
 
     // Verificar se a fonte foi carregada, caso não for ele retorna nulo.
@@ -96,13 +105,20 @@ export default function Login({navigation}) {
             color: "#007784",
             fontSize: 35,
             fontFamily: 'Lato_900Black',
-            paddingBottom: 35
+            paddingBottom: 20
         },
         segundoContainer:{
             height:"100%",
             width:"100%",
             alignItems:"center",
             paddingTop:100
+        },
+        criarConta:{
+            paddingTop: 12,
+            textDecorationLine: 'underline',
+            fontFamily:'Lato_400Regular',
+            fontSize: 18,
+            color: 'gray'
         }
     })
 
@@ -114,6 +130,7 @@ export default function Login({navigation}) {
                     <CustomInput onChangeText={handlerEmail} style={styles.input} placeholder={"Digite seu email"}></CustomInput>
                     <CustomInputPass onChangeText={handlerPassword} pStyle={styles.textPassword} vStyle={[styles.input, styles.password]} placeholder={"Digite sua senha"}></CustomInputPass>
                     <BtnDefault onPress={login} txtStyle={styles.textInput} style={styles.submit} title={"Entrar"}></BtnDefault>
+                    <TouchableOpacity onPress={handlerPress}><Text style={styles.criarConta}>Ou crie sua conta</Text></TouchableOpacity>
                 </View>
             </SafeAreaView>
 
