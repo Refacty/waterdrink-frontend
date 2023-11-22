@@ -10,6 +10,7 @@ import LoginScreen from "../pages/login/LoginScreen";
 import registroScreen from "../pages/register/RegistroScreen";
 import { View, TouchableOpacity } from 'react-native';
 import WeightScreen from "../../src/pages/weight/WeightScreen"
+import RegistroScreen from "../pages/register/RegistroScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -94,8 +95,9 @@ const MainStack = () => {
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="RegistroScreen">
+      <Stack.Navigator initialRouteName="LoginScreen">
       <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false, gestureEnabled: false}} />
+      <Stack.Screen name="RegistroScreen" component={RegistroScreen} options={{ headerShown: false, gestureEnabled: false}} />
       <Stack.Screen name="WeightScreen" component={WeightScreen} options={{ headerShown: false, gestureEnabled: false}} />
       <Stack.Screen name="MainStack" component={MainStack} options={{ headerShown: false, gestureEnabled: false}} />
       </Stack.Navigator>
