@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, SafeAreaView, View, Alert, Image } from 'react-native';
+import {Text, SafeAreaView, View, Alert, Image, TouchableOpacity} from 'react-native';
 import CustomButton from '../../components/btnDefault';
 import CustomInput from '../../components/inputDefault';
 import CustomInputPass from '../../components/inputPassword';
@@ -49,6 +49,14 @@ const App = ({navigation}) => {
   const handlerRsenha = (inputValue) => {
     setRsenha(inputValue);
 
+  }
+
+  const [press, setPress] = useState(false)
+  function handlerPress(press) {
+    setPress(press)
+    if (press) {
+      navigation.navigate('LoginScreen')
+    }
   }
 
   const userData = {
@@ -118,18 +126,18 @@ const App = ({navigation}) => {
   const logo = require('../../images/waterdrink.png');
 
   return (
-    <SafeAreaView style={{backgroundColor:"#E6FCFF", paddingTop:50}}>
-      <View className="w-4/5 flex justify-center items-center m-auto h-full pt-10">
-        <Image source={logo} className="w-28 h-28"/>
+    <SafeAreaView style={{backgroundColor:"#E6FCFF", paddingBottom: 45, alignItems: 'center', justifyContent: 'center', height: '100%'}}>
+      <View style={{justifyContent: 'center', alignItems: 'center', width: '85%'}}>
+        <Image source={logo} style={{width: 200, height: 200}}/>
 
-        <Text className="text-5xl text-blue-400 font-lato-900" style={{color:"#007784"}}>Registrar-se</Text>
+        <Text className="text-blue-400 font-lato-900" style={{color:"#007784", fontSize: 40}}>Crie uma conta</Text>
 
         <View className="w-full mt-5">
           <CustomInput placeholder={'Nome completo'} onChangeText={handlerNome} value={nome}></CustomInput>
           <CustomInput placeholder={'Email'} onChangeText={handlerEmail} value={email}></CustomInput>
 
           <CustomInputPass placeholder={'Senha'} onChangeText={handlerSenha} value={senha}></CustomInputPass>
-          <CustomInputPass placeholder={'Repita sua senha'} onChangeText={handlerRsenha} value={rsenha} vStyle={{marginTop:20, marginBottom:20}}></CustomInputPass>
+          <CustomInputPass placeholder={'Repita sua senha'} onChangeText={handlerRsenha} value={rsenha} vStyle={{marginTop:20, marginBottom:10}}></CustomInputPass>
 
           <View className="w-full flex flex-row items-center">
             <BouncyCheckbox
@@ -145,9 +153,10 @@ const App = ({navigation}) => {
           </View>
         </View>
 
-        <View className="m-auto text-center w-full mt-3">
-          <CustomButton title={'Registrar-se'} onPress={() => postData()} />
+        <View style={{width: '100%', alignItems: 'center', paddingTop: 10}}>
+          <CustomButton txtStyle={{fontSize: 20}} title={'Registrar-se'} onPress={() => postData()} />
         </View>
+        <TouchableOpacity onPress={handlerPress} style={{paddingTop: 10}}><Text style={{textDecorationLine: 'underline', color: 'gray', fontSize: 18}}>Ou entre em uma conta</Text></TouchableOpacity>
       </View>
     </SafeAreaView>
   );
