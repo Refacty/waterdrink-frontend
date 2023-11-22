@@ -7,6 +7,7 @@ import HomeScreen from '../../src/pages/home/HomeScreen';
 import Profile from '../pages/profile/ProfileScreen';
 import { useNavigation } from '@react-navigation/native';
 import LoginScreen from "../pages/login/LoginScreen";
+import registroScreen from "../pages/register/RegistroScreen";
 import { View, TouchableOpacity } from 'react-native';
 import WeightScreen from "../../src/pages/weight/WeightScreen"
 
@@ -93,7 +94,7 @@ const MainStack = () => {
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="LoginScreen">
+      <Stack.Navigator initialRouteName="RegistroScreen">
       <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false, gestureEnabled: false}} />
       <Stack.Screen name="WeightScreen" component={WeightScreen} options={{ headerShown: false, gestureEnabled: false}} />
       <Stack.Screen name="MainStack" component={MainStack} options={{ headerShown: false, gestureEnabled: false}} />

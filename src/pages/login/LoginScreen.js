@@ -6,6 +6,7 @@ import BtnDefault from "../../components/btnDefault";
 import { Lato_900Black, Lato_100Thin, useFonts } from '@expo-google-fonts/lato';
 import axios from 'axios';
 import bd from '../../services/tbUser/TbUser';
+import logo from "../../images/waterdrink.png";
 
 export default function Login({navigation}) {
 
@@ -21,33 +22,29 @@ export default function Login({navigation}) {
 
 
     async function login() {
-        const Data = {
-            "email": getEmail,
-            "password": getPassword
-        }
+        try {
+            const Data = {
+                "email": getEmail,
+                "password": getPassword
+            };
+            const response = await axios.post('http://10.0.0.119:8080/login', Data);
 
-        const response = await axios.post('http://10.0.0.119:8080/login', Data)
-            .then(
-                        response => {
-                            console.log(response.data)
-                            bd.executar("UPDATE tb_user SET user_session = ?, user_id = ?;", [response.data.token, response.data.id])
-                                .then(
-                                response => {
-                                    console.log("Update feito com sucesso no BD.")
-                                })
-                                .catch(error => {
-                                    console.error("Erro no BD:", error)
-                                }
-                            )
-             .catch(
-                        error => {
-                            console.error("Erro na chamada para api:", JSON.stringify(error.data))
-                            })
+            console.log(response.data);
+
+            await bd.executar("UPDATE tb_user SET user_session = ?, user_id = ?, user_logado = ?;", [response.data.token, response.data.id, 1]);
+            navigation.navigate("MainStack");
+
+            console.log("Update feito com sucesso no BD.");
+        } catch (error) {
+            if (error.response) {
+                console.error("Erro na chamada para a API:", JSON.stringify(error.response.data));
+            } else if (error.request) {
+                console.error("Sem resposta do servidor");
+            } else {
+                console.error("Erro interno:", error.message);
             }
-        );
-
+        }
     }
-
 
     // Carregar as fonts
     const [fontLoaded] = useFonts({
@@ -77,7 +74,7 @@ export default function Login({navigation}) {
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: '#E6FCFF',
-            paddingBottom: 170
+            paddingBottom: 170,
         },
         submit: {
             width: '85%',
@@ -100,16 +97,24 @@ export default function Login({navigation}) {
             fontSize: 35,
             fontFamily: 'Lato_900Black',
             paddingBottom: 35
+        },
+        segundoContainer:{
+            height:"100%",
+            width:"100%",
+            alignItems:"center",
+            paddingTop:100
         }
     })
 
     return (
             <SafeAreaView style={styles.container}>
-                <Image source={logo} style={styles.logo}/>
-                <Text style={styles.title}>Faça seu login</Text>
-                <CustomInput onChangeText={handlerEmail} style={styles.input} placeholder={"Digite seu email"}></CustomInput>
-                <CustomInputPass onChangeText={handlerPassword} pStyle={styles.textPassword} vStyle={[styles.input, styles.password]} placeholder={"Digite sua senha"}></CustomInputPass>
-                <BtnDefault onPress={login} txtStyle={styles.textInput} style={styles.submit} title={"Entrar"}></BtnDefault>
+                <View style={styles.segundoContainer}>
+                    <Image source={logo} style={styles.logo}/>
+                    <Text style={styles.title}>Faça seu login</Text>
+                    <CustomInput onChangeText={handlerEmail} style={styles.input} placeholder={"Digite seu email"}></CustomInput>
+                    <CustomInputPass onChangeText={handlerPassword} pStyle={styles.textPassword} vStyle={[styles.input, styles.password]} placeholder={"Digite sua senha"}></CustomInputPass>
+                    <BtnDefault onPress={login} txtStyle={styles.textInput} style={styles.submit} title={"Entrar"}></BtnDefault>
+                </View>
             </SafeAreaView>
 
     );

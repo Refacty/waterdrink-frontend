@@ -41,7 +41,7 @@ const InputStyle = StyleSheet.create({
   estilo:{
     height:50,
     backgroundColor:"white",
-    borderRadius:45,
+    borderRadius:30,
   }
 });
 
