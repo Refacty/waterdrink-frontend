@@ -5,10 +5,6 @@ import CustomInputPass from "../../components/inputPassword";
 import BtnDefault from "../../components/btnDefault";
 import { Lato_900Black, Lato_400Regular, Lato_100Thin, useFonts } from '@expo-google-fonts/lato';
 import {login} from "../../api/Api";
-import axios from 'axios';
-import bd from '../../services/tbUser/TbUser';
-import logo from "../../images/waterdrink.png";
-import RegistroScreen from "../register/RegistroScreen";
 
 export default function Login({navigation}) {
     const [getEmail, setEmail] = useState("")
@@ -35,15 +31,12 @@ export default function Login({navigation}) {
         }
     }
 
-
-    // Carregar as fonts
     const [fontLoaded] = useFonts({
         Lato_100Thin,
         Lato_900Black, Lato_400Regular,
 
     });
 
-    // Verificar se a fonte foi carregada, caso não for ele retorna nulo.
     if (!fontLoaded) {
         return null;
     }

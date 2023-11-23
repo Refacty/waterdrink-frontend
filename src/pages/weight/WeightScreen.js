@@ -48,18 +48,16 @@ export default function WeightScreen({ navigation }) {
   const enviarPeso = async () => {
     try {
       const result = await bd.consultar("SELECT user_id, user_session FROM tb_user");
-  
+      console.log("BANCO:", result[0].user_id)
       if (result && result.length > 0) {
         const headers = { 'Authorization': result[0].user_session };
         const mId = result[0].user_id;
-  
         const url = "http://10.0.0.119:8080/tb_user/" + parseInt(mId);
         console.log("URL: ", url);
         console.log("REQUEST: ", dataUpdate, headers);
-  
         const response = await axios.put(url, dataUpdate, { headers });
         console.log('Requisição PUT bem-sucedida:', response.data);
-  
+
         await bd.executar("UPDATE tb_user SET user_weight = ?, user_birthday = ?", [
           dataUpdate.weight,
           dataUpdate.birthday,

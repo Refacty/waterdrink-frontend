@@ -5,8 +5,6 @@ import CustomInput from '../../components/inputDefault';
 import CustomInputPass from '../../components/inputPassword';
 import { Lato_900Black, Lato_100Thin, useFonts } from '@expo-google-fonts/lato';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import axios from 'axios';
-import bd from '../../services/tbUser/TbUser';
 import {registroApi} from "../../api/Api";
 
 const App = ({navigation}) => {
@@ -42,7 +40,7 @@ const App = ({navigation}) => {
     }
   }
 
-  const postData = () => {
+  const postData = async () => {
     if (nome === "") {
       Alert.alert('Nome vazio');
       return;
@@ -67,9 +65,17 @@ const App = ({navigation}) => {
         "weeklyProgress": 1,
         "dailyProgress": 0.0
       }
-        if(registroApi(userData)){
+
+      try{
+        const navegar = await registroApi(userData)
+        if(navegar){
           navigation.navigate("WeightScreen")
         }
+      }
+      catch (error){
+        Alert.alert(error.toString())
+      }
+
     } else {
       Alert.alert('Senhas não coincidem.');
     }
