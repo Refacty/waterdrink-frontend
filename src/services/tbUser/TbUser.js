@@ -2,8 +2,10 @@ import db from "../sqlLite/DbManager";
 
 db.transaction((tx) => {
 
+  tx.executeSql("DROP TABLE tb_user;")
+
   tx.executeSql(
-    "CREATE TABLE IF NOT EXISTS tb_user (bd_key INTEGER PRIMARY KEY, user_id, user_name VARCHAR(255), user_email VARCHAR(255), user_session TEXT, user_birthday DATE, user_daily_progress FLOAT, user_profession VARCHAR(255), user_weekly_progress FLOAT, user_weight FLOAT);"
+      "CREATE TABLE IF NOT EXISTS tb_user (bd_key INTEGER PRIMARY KEY, user_id INTEGER, user_logado INTEGER default(0), user_name VARCHAR(255), user_email VARCHAR(255), user_session VARCHAR(255), user_birthday DATE, user_daily_progress FLOAT, user_profession VARCHAR(255), user_weekly_progress FLOAT, user_weight FLOAT);"
   );
 });
 
