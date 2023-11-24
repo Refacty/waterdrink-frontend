@@ -39,7 +39,7 @@ export default function Home({ route }) {
 
             const headers = { 'Authorization': response[0].user_session };
             const id = response[0].user_id
-            const url = "http://10.0.0.119:8080/tb_user/" + parseInt(id)
+            const url = "http://192.168.3.60:8080/tb_user/" + parseInt(id)
 
             console.log("REQUEST: ", url, data, { headers })
             const api = axios.put(url, data, { headers })
@@ -126,12 +126,12 @@ export default function Home({ route }) {
       left: -25,
     },
     textoKg: {
-      fontFamily: 'Lato_900Black', 
-      color: '#007784', 
-      width: '100%', 
-      flexDirection: 'row', 
-      fontSize: 15, 
-      textAlign: 'center' 
+      fontFamily: 'Lato_900Black',
+      color: '#007784',
+      width: '100%',
+      flexDirection: 'row',
+      fontSize: 15,
+      textAlign: 'center'
     }
   })
 
@@ -156,40 +156,40 @@ export default function Home({ route }) {
                 source={require('../../images/Copo200.png')}
                 style={{ width: 100, height: 100, resizeMode: 'contain' }}
               />
-              <Text style={{ fontSize: 12, fontFamily: 'Lato_900Black', color: '#007784', paddingTop: 5 }}>200ML</Text>
+              <Text style={{ fontSize: 12, fontFamily: 'Lato_900Black', color: '#007784', paddingTop: 5 }}>200ml</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => {atualizaProgressoBd("D", 0.300)}} style={{ margin: 10, padding: 20, backgroundColor: 'white', borderRadius: 10, alignItems: 'center' }}>
-              <Image
-                source={require('../../images/Copo300.png')}
-                style={{ width: 100, height: 100, resizeMode: 'contain' }}
-              />
-              <Text style={{ fontSize: 12, fontFamily: 'Lato_900Black', color: '#007784', paddingTop: 5 }}>300ML</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => {atualizaProgressoBd("D", 0.500)}} style={{ margin: 10, padding: 20, backgroundColor: 'white', borderRadius: 10, alignItems: 'center' }}>
+            <TouchableOpacity onPress={() => {atualizaProgressoBd("D", 0.200)}} style={{ margin: 10, padding: 20, backgroundColor: 'white', borderRadius: 10, alignItems: 'center' }}>
               <Image
                 source={require('../../images/Garrafa500.png')}
                 style={{ width: 100, height: 100, resizeMode: 'contain' }}
               />
-              <Text style={{ fontSize: 12, fontFamily: 'Lato_900Black', color: '#007784', paddingTop: 5 }}>500ML</Text>
+              <Text style={{ fontSize: 12, fontFamily: 'Lato_900Black', color: '#007784', paddingTop: 5 }}>500ml</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => {atualizaProgressoBd("D", 1)}} style={{ margin: 10, padding: 20, backgroundColor: 'white', borderRadius: 10, alignItems: 'center', right: 200, bottom: 170 }}>
+            <TouchableOpacity onPress={() => {atualizaProgressoBd("D", 1)}} style={{ margin: 10, padding: 20, backgroundColor: 'white', borderRadius: 10, alignItems: 'center' }}>
               <Image
                 source={require('../../images/Garrafa1L.png')}
                 style={{ width: 100, height: 100, resizeMode: 'contain' }}
               />
               <Text style={{ fontSize: 12, fontFamily: 'Lato_900Black', color: '#007784', paddingTop: 5 }}>1L</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => {atualizaProgressoBd("D", 1)}} style={{ margin: 10, padding: 20, backgroundColor: 'white', borderRadius: 10, alignItems: 'center', right: 200, bottom: 170 }}>
+              <Image
+                source={require('../../images/editwater.png')}
+                style={{ width: 100, height: 100, resizeMode: 'contain' }}
+              />
+              <Text style={{ fontSize: 12, fontFamily: 'Lato_900Black', color: '#007784', paddingTop: 5 }}>PERSONALIZADO</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>
 
       <Text className="text-8xl bottom-44 text-default" style={{ fontSize: 80, fontFamily: 'Lato_900Black' }}>{lsProgresso < 100?Math.round(lsProgresso):100}%</Text>
-      
+
       <Text className="bottom-20" style={Estilo.textoKg}>
-        A quantidade de água necessária de 
+        A quantidade de água necessária de
       acordo com o seu peso é de {lsQtdadeDiaria.toFixed(1)} litros por dia. </Text>
 
       <View style={{ borderRadius: 20, width: '132%', height: '25%', backgroundColor:"#D4D4D4"}}>
