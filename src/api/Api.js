@@ -2,7 +2,14 @@ import axios from 'axios';
 import bd from "../services/tbUser/TbUser";
 
 const baseURL = 'http://10.0.0.119:8080';
+
+const zerarBDLocal= () => {
+    bd.executar("DELETE FROM tb_user;")
+}
+
 export async function login(email, password) {
+    zerarBDLocal()
+
     const Data = {
         "email": email,
         "password": password
@@ -22,8 +29,8 @@ export async function login(email, password) {
                     user_weight: retorno.user.weight,
                     user_birthday: retorno.user.birthday,
                     user_profession: retorno.user.profession,
-                    user_weekly_progress: retorno.user.daily_progress,
-                    user_daily_progress: retorno.user.weekly_progress,
+                    user_weekly_progress: retorno.user.weeklyProgress,
+                    user_daily_progress: retorno.user.dailyProgress,
                     user_session: retorno.token,
                     user_logado: 1
                 };
@@ -49,6 +56,8 @@ export async function login(email, password) {
 
 
 export const registroApi = async (user) => {
+    zerarBDLocal()
+
     try {
         const response = await axios.post('http://10.0.0.119:8080/register', user);
         const newUser = response.data;
@@ -70,7 +79,6 @@ export const registroApi = async (user) => {
         await bd.create_user(userData);
         return true;
     } catch (error) {
-        console.log('Erro da API:', error.response.data);
         throw new Error(`STATUS: ${JSON.stringify(error.response.status)} || JSON: ${JSON.stringify(error.response.data)}`);
         return false;
     }

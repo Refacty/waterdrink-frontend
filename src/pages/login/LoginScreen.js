@@ -31,7 +31,7 @@ export default function Login({navigation}) {
             valido && navigation.navigate("MainStack");
         } catch (error) {
             console.error("Erro durante login:", error.message);
-            Alert.alert("Ocorreu um erro durante o login.");
+            Alert.alert("Ocorreu um erro durante o login:", error.message);
         }
     };
 

@@ -33,8 +33,8 @@ export default function Home({ route }) {
           if (response.length > 0){
 
             const data = {
-              weeklyProgress : response[0].user_daily_progress,
-              dailyProgress : response[0].user_weekly_progress
+              weeklyProgress: response[0].user_weekly_progress,
+              dailyProgress : response[0].user_daily_progress
             }
 
             const headers = { 'Authorization': response[0].user_session };
@@ -42,6 +42,7 @@ export default function Home({ route }) {
             const url = "http://192.168.3.60:8080/tb_user/" + parseInt(id)
 
             console.log("REQUEST: ", url, data, { headers })
+            console.log("O QUE VAI PRA API:", data)
             const api = axios.put(url, data, { headers })
             .then(response => {
               console.log("API: ", JSON.stringify(response.status))
@@ -84,7 +85,6 @@ export default function Home({ route }) {
         atualizaQuantidadeAgua(users[0].user_daily_progress)
         atualizaProgresso(((users[0].user_daily_progress) / (users[0].user_weight / 35)) * 100)
         atualizaQtdadeDiaria((users[0].user_weight * 0.035))
-        //console.log("BANCO: ", users[0])
       } else {
         console.log('Nenhum usuário encontrado.');
       }
@@ -94,7 +94,7 @@ export default function Home({ route }) {
     }
   };
 
-  BuscaDados() // Chama a função para buscar os dados do usuário.
+  BuscaDados()
 
   const isModalVisible = route.params ? route.params.isModalVisible : false;
 
@@ -103,7 +103,6 @@ export default function Home({ route }) {
     Lato_900Black
   });
 
-  // Verificar se a fonte foi carregada, caso não for ele retorna nulo.
   if (!fontLoaded) {
     return null;
   }
@@ -159,7 +158,7 @@ export default function Home({ route }) {
               <Text style={{ fontSize: 12, fontFamily: 'Lato_900Black', color: '#007784', paddingTop: 5 }}>200ml</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => {atualizaProgressoBd("D", 0.200)}} style={{ margin: 10, padding: 20, backgroundColor: 'white', borderRadius: 10, alignItems: 'center' }}>
+            <TouchableOpacity onPress={() => {atualizaProgressoBd("D", 0.500)}} style={{ margin: 10, padding: 20, backgroundColor: 'white', borderRadius: 10, alignItems: 'center' }}>
               <Image
                 source={require('../../images/Garrafa500.png')}
                 style={{ width: 100, height: 100, resizeMode: 'contain' }}

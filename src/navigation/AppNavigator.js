@@ -7,7 +7,6 @@ import HomeScreen from '../../src/pages/home/HomeScreen';
 import Profile from '../pages/profile/ProfileScreen';
 import { useNavigation } from '@react-navigation/native';
 import LoginScreen from "../pages/login/LoginScreen";
-import registroScreen from "../pages/register/RegistroScreen";
 import { View, TouchableOpacity } from 'react-native';
 import WeightScreen from "../../src/pages/weight/WeightScreen"
 import RegistroScreen from "../pages/register/RegistroScreen";
@@ -24,7 +23,7 @@ const MainStack = () => {
   };
 
   const handleModalPress = () => {
-    toggleModal(); // Chama a função para alternar o modal
+    toggleModal();
     navigation.navigate('HomeScreen', { isModalVisible: !isModalVisible });
   };
   return (
