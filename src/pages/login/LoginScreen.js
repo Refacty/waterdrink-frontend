@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, SafeAreaView, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
+import {View, SafeAreaView, StyleSheet, Image, Text, TouchableOpacity, Alert} from 'react-native';
 import CustomInput from "../../components/inputDefault";
 import CustomInputPass from "../../components/inputPassword";
 import BtnDefault from "../../components/btnDefault";
@@ -25,11 +25,15 @@ export default function Login({navigation}) {
         }
     }
 
-    const Fazerlogin = () => {
-        if (login(getEmail, getPassword)){
-            navigation.navigate("MainStack");
+    const Fazerlogin = async ( ) => {
+        try {
+            const valido = await login(getEmail, getPassword);
+            valido && navigation.navigate("MainStack");
+        } catch (error) {
+            console.error("Erro durante login:", error.message);
+            Alert.alert("Ocorreu um erro durante o login.");
         }
-    }
+    };
 
     const [fontLoaded] = useFonts({
         Lato_100Thin,

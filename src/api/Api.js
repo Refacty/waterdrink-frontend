@@ -7,41 +7,42 @@ export async function login(email, password) {
         "email": email,
         "password": password
     };
-    if (email != "" && password != ""){
+
+    console.log("DATA:", Data)
         try {
             const requisicao = await axios.post('http://10.0.0.119:8080/login', Data);
-            const retorno = requisicao.data
-            const user = {
+            const retorno = requisicao.data;
+            console.log("retorno:", retorno)
+
+            if (retorno !== "") {
+                const user = {
                     user_id: parseInt(retorno.user.user_id),
-                    user_name : retorno.user.name,
-                    user_email : retorno.user.email,
-                    user_weight : retorno.user.weight,
-                    user_birthday : retorno.user.birthday,
-                    user_profession : retorno.user.profession,
-                    user_weekly_progress : retorno.user.daily_progress,
-                    user_daily_progress : retorno.user.weekly_progress,
-                    user_session : retorno.token,
-                    user_logado : 1
+                    user_name: retorno.user.name,
+                    user_email: retorno.user.email,
+                    user_weight: retorno.user.weight,
+                    user_birthday: retorno.user.birthday,
+                    user_profession: retorno.user.profession,
+                    user_weekly_progress: retorno.user.daily_progress,
+                    user_daily_progress: retorno.user.weekly_progress,
+                    user_session: retorno.token,
+                    user_logado: 1
+                };
+
+                console.log("USER QUE VAI NO BD", user);
+                await bd.create_user(user);
+
+                console.log("Update feito com sucesso no BD.");
+                return true;
+            } else {
+                throw new Error("Nenhum usuario encontrado com essas credenciais");
             }
-
-
-            console.log("USER QUE VAI NO BD", user)
-            await bd.create_user(user)
-
-            console.log("Update feito com sucesso no BD.");
-            return true
-        } catch (error)
-            {
-                if (error.response) {
-                    console.error("Erro na chamada para a API:", JSON.stringify(error.response.data));
-                    return false
-                } else if (error.request) {
-                    console.error("Sem resposta do servidor");
-                    return false
-                } else {
-                    console.error("Erro interno:", error.message);
-                    return false
-                }
+        } catch (error) {
+            if (error.response) {
+                throw new Error("Erro na chamada para a API: " + JSON.stringify(error.response.data));
+            } else if (error.request) {
+                throw new Error("Sem resposta do servidor");
+            } else {
+                throw new Error("Erro interno: " + error.message);
             }
         }
 }
