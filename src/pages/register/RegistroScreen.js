@@ -1,56 +1,37 @@
 import React, { useState } from 'react';
-import {Text, SafeAreaView, View, Alert, Image, TouchableOpacity} from 'react-native';
+import {Text, SafeAreaView, View, Alert, Image, TouchableOpacity, StyleSheet} from 'react-native';
 import CustomButton from '../../components/btnDefault';
 import CustomInput from '../../components/inputDefault';
 import CustomInputPass from '../../components/inputPassword';
 import { Lato_900Black, Lato_100Thin, useFonts } from '@expo-google-fonts/lato';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import axios from 'axios';
-import bd from '../../services/tbUser/TbUser';
+import {registroApi} from "../../api/Api";
 
-// funçãoo 'Main'
 const App = ({navigation}) => {
 
-  async function iniciarBD() {
-    await bd.executar("CREATE TABLE IF NOT EXISTS tb_user (bd_key INTEGER PRIMARY KEY, user_id INTEGER, user_logado INTEGER default(0), user_name VARCHAR(255), user_email VARCHAR(255), user_session VARCHAR(255), user_birthday DATE, user_daily_progress FLOAT, user_profession VARCHAR(255), user_weekly_progress FLOAT, user_weight FLOAT);").then((response) => {
-    })
-    .catch((error) => {
-    })
-
-    await bd.executar("DELETE FROM tb_user;").then((response) => {
-    })
-    .catch((error) => {
-    })
-}
-
-  // Carregar as fonts
   const [fontLoaded] = useFonts({
     Lato_100Thin,
     Lato_900Black
   });
 
-  // Estado para o nome, email, senha e confirmação de senha.
+  const logo = require('../../images/waterdrink.png');
+
   const [nome, setNome] = useState("");
   const handlerNome = (inputValue) => {
     setNome(inputValue);
-
   }
   const [email, setEmail] = useState("");
   const handlerEmail = (inputValue) => {
     setEmail(inputValue);
-
   }
   const [senha, setSenha] = useState("");
   const handlerSenha = (inputValue) => {
     setSenha(inputValue);
-
   }
   const [rsenha, setRsenha] = useState("");
   const handlerRsenha = (inputValue) => {
     setRsenha(inputValue);
-
   }
-
   const [press, setPress] = useState(false)
   function handlerPress(press) {
     setPress(press)
@@ -59,104 +40,104 @@ const App = ({navigation}) => {
     }
   }
 
-  const userData = {
-    "name": nome,
-    "email": email,
-    "password": senha,
-    "weight": 0,
-    "birthday": null,
-    "profession": null,
-    "progress_id": 1,
-    "weeklyProgress": 1,
-    "dailyProgress": 0.0
-  }
-
-  //Função assincrona que envia os dados de cadastro para API no back-end.\
-  iniciarBD()
   const postData = async () => {
-
-
     if (nome === "") {
       Alert.alert('Nome vazio');
       return;
     }
-
     if (email === "") {
       Alert.alert('Email vazio');
       return;
     }
-
     if (senha === "") {
       Alert.alert('Senha vazia');
       return;
     }
-
     if (senha === rsenha) {
-      try {
-        const response = await axios.post('http://26.103.139.198:8080/register', userData);
-        const newUser = response.data;
-        console.log("API: ", JSON.stringify(response.data))
-
-        await bd.create_user({
-          user_id: parseInt(newUser.user.user_id),
-          user_name : newUser.user.name,
-          user_email : newUser.user.email,
-          user_weight : newUser.user.weight,
-          user_birthday : newUser.user.birthday,
-          user_profession : newUser.user.profession,
-          user_weekly_progress : 0,
-          user_daily_progress : 0,
-          user_session : newUser.token})
-
-         navigation.navigate("WeightScreen")
-      } catch (error) {
-        console.log('Erro da API:', error.response.data);
-        console.log(`STATUS: ${JSON.stringify(error.response.status)} || JSON: ${JSON.stringify(error.response.data)}`);
+      const userData = {
+        "name": nome,
+        "email": email,
+        "password": senha,
+        "weight": 0,
+        "birthday": null,
+        "profession": null,
+        "progress_id": 1,
+        "weeklyProgress": 1,
+        "dailyProgress": 0.0
       }
+
+      try{
+        const navegar = await registroApi(userData)
+        if(navegar){
+          navigation.navigate("WeightScreen")
+        }
+      }
+      catch (error){
+        Alert.alert(error.toString())
+      }
+
     } else {
       Alert.alert('Senhas não coincidem.');
     }
   };
 
+  const styles = StyleSheet.create({
+    containerPrincipal:{
+      backgroundColor:"#E6FCFF",
+      paddingBottom: 45,
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '100%'
+    },
+    containerSecundario:{
+      height:"100%",
+      width:"85%",
+      alignItems:"center",
+      paddingTop:80
+    },
+    txtCriarConta:{
+      color:"#007784",
+      fontSize: 40,
+      fontFamily:"Lato_900Black"
+    },
+    lembrarSenhaTexto:{
+      textDecorationLine: "none",
+      color: '#007784',
+      fontFamily: 'Lato_900Black',
+    },
+    botaoContainer:{
+      width: '100%',
+      alignItems: 'center',
+      paddingTop: 10
+    },
+    txtIrLogin:{
+      textDecorationLine: 'underline',
+      color: 'gray',
+      fontSize: 18
+    }
+  })
 
-  // Verificar se a fonte foi carregada, caso não for ele retorna nulo.
   if (!fontLoaded) {
     return null;
   }
-  const logo = require('../../images/waterdrink.png');
 
   return (
-    <SafeAreaView style={{backgroundColor:"#E6FCFF", paddingBottom: 45, alignItems: 'center', justifyContent: 'center', height: '100%'}}>
-      <View style={{justifyContent: 'center', alignItems: 'center', width: '85%'}}>
+    <SafeAreaView style={styles.containerPrincipal}>
+      <View style={styles.containerSecundario}>
         <Image source={logo} style={{width: 200, height: 200}}/>
-
-        <Text className="text-blue-400 font-lato-900" style={{color:"#007784", fontSize: 40}}>Crie uma conta</Text>
-
+        <Text style={styles.txtCriarConta}>Crie uma conta</Text>
         <View className="w-full mt-5">
           <CustomInput placeholder={'Nome completo'} onChangeText={handlerNome} value={nome}></CustomInput>
           <CustomInput placeholder={'Email'} onChangeText={handlerEmail} value={email}></CustomInput>
-
           <CustomInputPass placeholder={'Senha'} onChangeText={handlerSenha} value={senha}></CustomInputPass>
-          <CustomInputPass placeholder={'Repita sua senha'} onChangeText={handlerRsenha} value={rsenha} vStyle={{marginTop:20, marginBottom:10}}></CustomInputPass>
-
-          <View className="w-full flex flex-row items-center">
-            <BouncyCheckbox
-              iconStyle={{ borderColor: "blue" }}
-              fillColor="#007784"
-              text='Lembrar senha'
-              textStyle={{
-                textDecorationLine: "none",
-                color: '#007784',
-                fontFamily: 'Lato_900Black',
-              }}
-            />
+          <CustomInputPass placeholder={'Repita sua senha'} onChangeText={handlerRsenha} value={rsenha} vStyle={{marginTop:20, marginBottom:10}}></CustomInputPass><View className="w-full flex flex-row items-center">
+          <BouncyCheckbox iconStyle={{ borderColor: "blue" }} fillColor="#007784" text='Lembrar senha' textStyle={styles.lembrarSenhaTexto}/>
           </View>
         </View>
-
-        <View style={{width: '100%', alignItems: 'center', paddingTop: 10}}>
+        <View style={styles.botaoContainer}>
           <CustomButton txtStyle={{fontSize: 20}} title={'Registrar-se'} onPress={() => postData()} />
         </View>
-        <TouchableOpacity onPress={handlerPress} style={{paddingTop: 10}}><Text style={{textDecorationLine: 'underline', color: 'gray', fontSize: 18}}>Ou entre em uma conta</Text></TouchableOpacity>
+        <TouchableOpacity onPress={handlerPress} style={{paddingTop: 10}}><Text style={styles.txtIrLogin}>Ou entre em uma conta</Text></TouchableOpacity>
       </View>
     </SafeAreaView>
   );

@@ -1,13 +1,10 @@
 import React, {useState} from 'react';
-import {View, SafeAreaView, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
+import {View, SafeAreaView, StyleSheet, Image, Text, TouchableOpacity, Alert} from 'react-native';
 import CustomInput from "../../components/inputDefault";
 import CustomInputPass from "../../components/inputPassword";
 import BtnDefault from "../../components/btnDefault";
 import { Lato_900Black, Lato_400Regular, Lato_100Thin, useFonts } from '@expo-google-fonts/lato';
-import axios from 'axios';
-import bd from '../../services/tbUser/TbUser';
-import logo from "../../images/waterdrink.png";
-import RegistroScreen from "../register/RegistroScreen";
+import {login} from "../../api/Api";
 
 export default function Login({navigation}) {
     const [getEmail, setEmail] = useState("")
@@ -28,40 +25,22 @@ export default function Login({navigation}) {
         }
     }
 
-
-    async function login() {
+    const Fazerlogin = async ( ) => {
         try {
-            const Data = {
-                "email": getEmail,
-                "password": getPassword
-            };
-            const response = await axios.post('http://10.0.0.119:8080/login', Data);
-
-            console.log(response.data);
-
-            await bd.executar("UPDATE tb_user SET user_session = ?, user_id = ?, user_logado = ?;", [response.data.token, response.data.id, 1]);
-            navigation.navigate("MainStack");
-
-            console.log("Update feito com sucesso no BD.");
+            const valido = await login(getEmail, getPassword);
+            valido && navigation.navigate("MainStack");
         } catch (error) {
-            if (error.response) {
-                console.error("Erro na chamada para a API:", JSON.stringify(error.response.data));
-            } else if (error.request) {
-                console.error("Sem resposta do servidor");
-            } else {
-                console.error("Erro interno:", error.message);
-            }
+            console.error("Erro durante login:", error.message);
+            Alert.alert("Ocorreu um erro durante o login.");
         }
-    }
+    };
 
-    // Carregar as fonts
     const [fontLoaded] = useFonts({
         Lato_100Thin,
         Lato_900Black, Lato_400Regular,
 
     });
 
-    // Verificar se a fonte foi carregada, caso não for ele retorna nulo.
     if (!fontLoaded) {
         return null;
     }
@@ -129,7 +108,7 @@ export default function Login({navigation}) {
                     <Text style={styles.title}>Faça seu login</Text>
                     <CustomInput onChangeText={handlerEmail} style={styles.input} placeholder={"Digite seu email"}></CustomInput>
                     <CustomInputPass onChangeText={handlerPassword} pStyle={styles.textPassword} vStyle={[styles.input, styles.password]} placeholder={"Digite sua senha"}></CustomInputPass>
-                    <BtnDefault onPress={login} txtStyle={styles.textInput} style={styles.submit} title={"Entrar"}></BtnDefault>
+                    <BtnDefault onPress={Fazerlogin} txtStyle={styles.textInput} style={styles.submit} title={"Entrar"}></BtnDefault>
                     <TouchableOpacity onPress={handlerPress}><Text style={styles.criarConta}>Ou crie sua conta</Text></TouchableOpacity>
                 </View>
             </SafeAreaView>
