@@ -83,7 +83,7 @@ export default function Home({ route }) {
       if (users && users.length > 0) {
         atualizaQuantidadeAgua(users[0].user_daily_progress)
         atualizaProgresso(((users[0].user_daily_progress) / (users[0].user_weight / 35)) * 100)
-        atualizaQtdadeDiaria((users[0].user_weight / 35))
+        atualizaQtdadeDiaria((users[0].user_weight * 0.035))
         //console.log("BANCO: ", users[0])
       } else {
         console.log('Nenhum usuário encontrado.');
