@@ -1,6 +1,7 @@
 import axios from 'axios';
 import bd from "../services/tbUser/TbUser";
 
+
 const baseURL = 'http://10.0.0.119:8080';
 
 const zerarBDLocal= () => {
@@ -82,4 +83,49 @@ export const registroApi = async (user) => {
         throw new Error(`STATUS: ${JSON.stringify(error.response.status)} || JSON: ${JSON.stringify(error.response.data)}`);
         return false;
     }
-};
+}
+
+    export async function atualizaProgressoBd(astrTipo, astrQtdade) {
+        if (astrTipo !== "D" && astrTipo !== "W") {
+            throw new Error("Invalid astrTipo value. It should be 'D' or 'W'.");
+        }
+        const progressColumn = astrTipo === "D" ? "user_daily_progress" : "user_weekly_progress";
+        const lstrSQL = `UPDATE tb_user SET ${progressColumn} = ${progressColumn} + ?`;
+        try {
+            const response = await bd.executar(lstrSQL, [astrQtdade]);
+            const userData = await bd.consultar("SELECT user_daily_progress, user_weekly_progress, user_session, user_id from tb_user;");
+            if (userData.length > 0) {
+                const data = {
+                    weeklyProgress: userData[0].user_weekly_progress,
+                    dailyProgress: userData[0].user_daily_progress,
+                };
+                const headers = { 'Authorization': userData[0].user_session };
+                const id = userData[0].user_id;
+                const url = `${baseURL}/tb_user/${parseInt(id)}`;
+                try {
+                    const apiResponse = await axios.put(url, data, { headers });
+                    return true;
+                } catch (apiError) {
+                    throw new Error("Erro ao enviar os dados de progresso para API: " + apiError.message);
+                }
+            }
+        } catch (dbError) {
+            throw new Error("Erro ao atualizar o progresso: " + dbError.message);
+        }
+    }
+
+export async function BuscaDadosUsuario() {
+    try {
+        const users = await bd.findAll();
+        if (users && users.length > 0) {
+            return users;
+        } else {
+            throw new Error('Erro ao buscar usuários: Nenhum usuário encontrado.');
+        }
+    } catch (dberror) {
+        throw new Error('Erro ao buscar usuários: ' + dberror.message);
+    }
+}
+
+
+

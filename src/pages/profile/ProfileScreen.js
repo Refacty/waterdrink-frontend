@@ -73,8 +73,6 @@ export default function Profile() {
          <CustomInput style={styles.dataInput} editable={false}></CustomInput>
          <CustomInput style={styles.dataInput} editable={false}></CustomInput>
      </View>
-
-
      </SafeAreaView>
  );
 }
