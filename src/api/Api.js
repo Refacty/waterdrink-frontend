@@ -1,5 +1,6 @@
 import axios from 'axios';
 import bd from "../services/tbUser/TbUser";
+import {Alert} from "react-native";
 
 
 const baseURL = 'http://10.0.0.119:8080';
@@ -58,7 +59,6 @@ export async function login(email, password) {
 
 export const registroApi = async (user) => {
     zerarBDLocal()
-
     try {
         const response = await axios.post('http://10.0.0.119:8080/register', user);
         const newUser = response.data;
@@ -127,5 +127,27 @@ export async function BuscaDadosUsuario() {
     }
 }
 
+export const enviarPeso = async (dataUpdate) => {
+    try {
+        const result = await bd.consultar("SELECT user_id, user_session FROM tb_user");
+        console.log("BANCO:", result[0].user_id)
+        if (result && result.length > 0) {
+            const headers = { 'Authorization': result[0].user_session };
+            const mId = result[0].user_id;
+            const url = "http://10.0.0.119:8080/tb_user/" + parseInt(mId);
+            const response = await axios.put(url, dataUpdate, { headers });
+            await bd.executar("UPDATE tb_user SET user_weight = ?, user_birthday = ?, user_profession = ?;", [
+                dataUpdate.weight,
+                dataUpdate.birthday,
+                dataUpdate.profession
+            ]);
+            return true
+        } else {
+            throw new Error("Usuário não encontrado.");
+        }
+    } catch (error) {
+        throw new Error(JSON.stringify(error.response.data));
+    }
+};
 
 

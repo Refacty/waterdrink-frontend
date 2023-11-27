@@ -21,7 +21,7 @@ const InputWeight = ({ placeholder, Value, onChangeText, style }) => {
 
   return (
     <TextInput
-      style={[inputStyle, InputEs.shadow, {fontSize:40, textAlign:'center'}, style]}
+      style={[inputStyle, InputEs.shadow, {fontSize:40, textAlign:'center', backgroundColor:"white"}, style]}
       className="pl-3 bg-white w-96 rounded-20 mb-5 text-black h-16 font-lato-900"
       placeholder={placeholder}
       onChangeText={onChangeText}

@@ -1,18 +1,43 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { SafeAreaView, Text, StyleSheet, View } from 'react-native';
 import * as Progress from 'react-native-progress';
 import CustomInput from "../../components/inputDefault";
+import {BuscaDadosUsuario} from "../../api/Api";
 export default function Profile() {
+
+ const pegarDados = async () => {
+  try{
+   const Dados  = await BuscaDadosUsuario()
+   atualizaNomeUsuario(Dados[0].user_name)
+   atualizaProfissaoUsuario(Dados[0].user_profession)
+  }
+  catch(error){
+   Alert.alert("Erro ao buscar dados do usuário:", error)
+  }
+ }
+ pegarDados()
+
+ const[nome, setNome] = useState("")
+const atualizaNomeUsuario = (nome) => {
+  setNome(nome)
+}
+
+const [profissao, setProfissao] = useState("")
+ const atualizaProfissaoUsuario = (profissao) => {
+  setProfissao(profissao)
+ }
 
  const styles = StyleSheet.create({
   container: {
    flex: 1,
    justifyContent: 'center',
    alignItems: 'center',
+   backgroundColor: '#E6FCFF',
+   paddingBottom: 170,
   },
   profileContainer: {
    alignItems: 'center',
-   marginBottom: 500,
+   paddingBottom:350
   },
   progressContainer: {
    alignItems: 'center',
@@ -61,8 +86,8 @@ export default function Profile() {
       <View style={styles.profileContainer}>
        <Text style={styles.textoPerfil}>Seu perfil</Text>
        <View style={styles.imagemPerfil}></View>
-       <Text style={styles.textoNome}>Teste da Silva</Text>
-       <Text style={styles.textoProfissao}>Vagabundo</Text>
+       <Text style={styles.textoNome}>{nome}</Text>
+       <Text style={styles.textoProfissao}>{profissao}</Text>
       </View>
 
      <View style={styles.progressContainer}>
