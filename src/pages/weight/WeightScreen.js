@@ -1,25 +1,13 @@
 import React, { useState } from 'react';
-import {
-    View,
-    Text,
-    SafeAreaView,
-    StyleSheet,
-    Alert,
-    KeyboardAvoidingView,
-    Platform,
-    TouchableOpacity
-} from 'react-native';
+import {View, SafeAreaView, StyleSheet, Alert, TouchableOpacity} from 'react-native';
 import CustomInput from '../../components/inputDefault';
 import { Lato_900Black, Lato_100Thin, useFonts } from '@expo-google-fonts/lato';
-import CustomButton from '../../components/btnDefault';
 import InputWeight from '../../components/InputWeight';
 import { enviarPeso } from "../../api/Api";
-import DatePicker from "../../components/datePicker";
 import TxtDefault from "../../components/txtDefault";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import BtnDefault from "../../components/btnDefault";
-import InputDefault from "../../components/inputDefault";
 import InputDefault2 from "../../components/InputDefault2";
 
 export default function WeightScreen({ navigation }) {

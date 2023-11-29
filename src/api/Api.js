@@ -1,9 +1,7 @@
 import axios from 'axios';
 import bd from "../services/tbUser/TbUser";
-import {Alert} from "react-native";
 
-
-const baseURL = 'http://10.0.0.119:8080';
+const baseURL = '10.0.0.119';
 
 const zerarBDLocal= () => {
     bd.executar("DELETE FROM tb_user;")
@@ -19,7 +17,7 @@ export async function login(email, password) {
 
     console.log("DATA:", Data)
         try {
-            const requisicao = await axios.post('http://10.0.0.119:8080/login', Data);
+            const requisicao = await axios.post('http://'+baseURL+':8080/login', Data);
             const retorno = requisicao.data;
             console.log("retorno:", retorno)
 
@@ -56,11 +54,10 @@ export async function login(email, password) {
         }
 }
 
-
 export const registroApi = async (user) => {
     zerarBDLocal()
     try {
-        const response = await axios.post('http://10.0.0.119:8080/register', user);
+        const response = await axios.post('http://'+baseURL+':8080/register', user);
         const newUser = response.data;
         console.log("API Response: ", JSON.stringify(response.data));
 
@@ -85,7 +82,7 @@ export const registroApi = async (user) => {
     }
 }
 
-    export async function atualizaProgressoBd(astrTipo, astrQtdade) {
+export async function atualizaProgressoBd(astrTipo, astrQtdade) {
         if (astrTipo !== "D" && astrTipo !== "W") {
             throw new Error("Invalid astrTipo value. It should be 'D' or 'W'.");
         }
@@ -101,7 +98,7 @@ export const registroApi = async (user) => {
                 };
                 const headers = { 'Authorization': userData[0].user_session };
                 const id = userData[0].user_id;
-                const url = `${baseURL}/tb_user/${parseInt(id)}`;
+                const url = `http://${baseURL}/tb_user/${parseInt(id)}`;
                 try {
                     const apiResponse = await axios.put(url, data, { headers });
                     return true;
@@ -134,7 +131,7 @@ export const enviarPeso = async (dataUpdate) => {
         if (result && result.length > 0) {
             const headers = { 'Authorization': result[0].user_session };
             const mId = result[0].user_id;
-            const url = "http://10.0.0.119:8080/tb_user/" + parseInt(mId);
+            const url = 'http://'+baseURL+':8080/tb_user/' + parseInt(mId);
             const response = await axios.put(url, dataUpdate, { headers });
             await bd.executar("UPDATE tb_user SET user_weight = ?, user_birthday = ?, user_profession = ?;", [
                 dataUpdate.weight,
@@ -149,5 +146,3 @@ export const enviarPeso = async (dataUpdate) => {
         throw new Error(JSON.stringify(error.response.data));
     }
 };
-
-
