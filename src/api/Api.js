@@ -20,7 +20,6 @@ export async function login(email, password) {
             const requisicao = await axios.post('http://'+baseURL+':8080/login', Data);
             const retorno = requisicao.data;
             console.log("retorno:", retorno)
-
             if (retorno !== "") {
                 const user = {
                     user_id: parseInt(retorno.user.user_id),
@@ -29,8 +28,6 @@ export async function login(email, password) {
                     user_weight: retorno.user.weight,
                     user_birthday: retorno.user.birthday,
                     user_profession: retorno.user.profession,
-                    user_weekly_progress: retorno.user.weeklyProgress,
-                    user_daily_progress: retorno.user.dailyProgress,
                     user_session: retorno.token,
                     user_logado: 1
                 };
@@ -68,8 +65,6 @@ export const registroApi = async (user) => {
             user_weight: newUser.user.weight,
             user_birthday: newUser.user.birthday,
             user_profession: newUser.user.profession,
-            user_weekly_progress: 0,
-            user_daily_progress: 0,
             user_session: newUser.token
         };
         console.log("User Data for Database: ", userData);
@@ -82,23 +77,18 @@ export const registroApi = async (user) => {
     }
 }
 
-export async function atualizaProgressoBd(astrTipo, astrQtdade) {
-        if (astrTipo !== "D" && astrTipo !== "W") {
-            throw new Error("Invalid astrTipo value. It should be 'D' or 'W'.");
-        }
-        const progressColumn = astrTipo === "D" ? "user_daily_progress" : "user_weekly_progress";
+export async function atualizaProgressoBd(astrQtdade) {
         const lstrSQL = `UPDATE tb_user SET ${progressColumn} = ${progressColumn} + ?`;
         try {
             const response = await bd.executar(lstrSQL, [astrQtdade]);
-            const userData = await bd.consultar("SELECT user_daily_progress, user_weekly_progress, user_session, user_id from tb_user;");
+            const userData = await bd.consultar("SELECT user_daily_progress, user_session, user_id from tb_user;");
             if (userData.length > 0) {
                 const data = {
-                    weeklyProgress: userData[0].user_weekly_progress,
-                    dailyProgress: userData[0].user_daily_progress,
+                    user_id: userData[0].user_id,
+                    water_amount: userData[0].user_daily_progress
                 };
                 const headers = { 'Authorization': userData[0].user_session };
-                const id = userData[0].user_id;
-                const url = `http://${baseURL}/tb_user/${parseInt(id)}`;
+                const url = `http://${baseURL}/tb_progress`;
                 try {
                     const apiResponse = await axios.put(url, data, { headers });
                     return true;
